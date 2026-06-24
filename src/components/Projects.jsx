@@ -46,7 +46,7 @@ const ProjectCard = ({ project, index, total }) => {
         marginBottom: index === total - 1 ? '0' : '50vh'
       }}
     >
-      <div className="bg-[#0b0e14] border border-[#2a2e38] rounded-[2rem] overflow-hidden shadow-2xl p-6 md:p-8 w-full max-w-6xl mx-auto backdrop-blur-sm relative flex flex-col h-[85vh] min-h-[600px] max-h-[900px]">
+      <div className="bg-[#0b0e14] border border-[#2a2e38] rounded-[2rem] overflow-hidden shadow-2xl p-6 md:p-8 w-full max-w-6xl mx-auto backdrop-blur-sm relative flex flex-col">
         
         {/* Card Header matching reference */}
         <div className="flex flex-col md:flex-row md:items-start justify-between mb-6 shrink-0">
@@ -84,14 +84,14 @@ const ProjectCard = ({ project, index, total }) => {
         </div>
 
         {/* Dynamic Image Grid */}
-        <div className="relative w-full rounded-xl overflow-hidden bg-[#161a22] border border-[#2a2e38] flex-1 min-h-0 flex items-center justify-center p-4 mb-6">
+        <div className="relative w-full rounded-xl overflow-hidden bg-[#161a22] border border-[#2a2e38] aspect-video mb-6">
           
           {/* Main Image */}
           {project.images[0] && (
             <img 
               src={project.images[0]} 
               alt={`${project.title} Main`}
-              className="w-full h-full object-contain rounded-lg drop-shadow-2xl z-10"
+              className="w-full h-full object-cover object-top z-10"
               onError={(e) => { e.target.style.display = 'none'; }}
             />
           )}
@@ -103,7 +103,7 @@ const ProjectCard = ({ project, index, total }) => {
               whileInView={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               viewport={{ once: true, margin: "-100px" }}
-              className="absolute bottom-4 right-4 md:bottom-8 md:right-8 w-[40%] md:w-[35%] rounded-lg border border-[#2a2e38] shadow-2xl z-20 bg-[#0b0e14] overflow-hidden"
+              className="absolute bottom-4 right-4 md:bottom-8 md:right-8 w-[45%] md:w-[35%] rounded-lg border border-[#2a2e38] shadow-2xl z-20 bg-[#0b0e14] overflow-hidden"
             >
               <img 
                 src={project.images[1]} 
@@ -121,7 +121,7 @@ const ProjectCard = ({ project, index, total }) => {
               whileInView={{ y: 0, opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
               viewport={{ once: true, margin: "-100px" }}
-              className="hidden md:block absolute top-8 left-8 w-[25%] rounded-lg border border-[#2a2e38] shadow-2xl z-30 bg-[#0b0e14] overflow-hidden"
+              className="absolute top-4 left-4 md:top-8 md:left-8 w-[35%] md:w-[25%] rounded-lg border border-[#2a2e38] shadow-2xl z-30 bg-[#0b0e14] overflow-hidden"
             >
               <img 
                 src={project.images[2]} 
