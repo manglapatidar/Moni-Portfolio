@@ -90,7 +90,17 @@ const Navbar = () => {
                 <a
                   key={link.name}
                   href={link.href}
-                  onClick={() => setIsOpen(false)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIsOpen(false);
+                    const targetId = link.href.replace('#', '');
+                    const elem = document.getElementById(targetId);
+                    if (elem) {
+                      setTimeout(() => {
+                        elem.scrollIntoView({ behavior: 'smooth' });
+                      }, 100);
+                    }
+                  }}
                   className="block text-lg text-gray-400 hover:text-white transition-colors"
                 >
                   <span className="text-gray-500">{link.name.split(' ')[0]}</span> {link.name.split(' ')[1]}

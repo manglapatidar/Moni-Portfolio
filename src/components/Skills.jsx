@@ -168,7 +168,6 @@ const Skills = () => {
                         r: [node.r, node.r + 0.5, node.r],
                         opacity: [0.7, 1, 0.7]
                       }}
-                      animateTransition={{ duration: 2 + i * 0.2, repeat: Infinity }}
                     />
                   ))}
                 </motion.g>
@@ -176,7 +175,7 @@ const Skills = () => {
             </div>
             
             {/* Background Glow */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-[var(--color-violet-accent)] rounded-full mix-blend-multiply filter blur-[80px] opacity-20 pointer-events-none"></div>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-[radial-gradient(circle,var(--color-violet-accent)_0%,transparent_70%)] opacity-20 pointer-events-none"></div>
           </motion.div>
 
         </div>
