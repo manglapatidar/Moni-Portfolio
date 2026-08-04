@@ -39,7 +39,7 @@ const About = () => {
             >
               <div className="font-mono text-gray-500 text-sm mb-6">// bio.txt</div>
               <p className="text-gray-400 text-lg leading-relaxed mb-6">
-                I am a computer science student specializing in <span className="text-white font-bold">Full-Stack Development</span> from Mandsaur University. My journey blends the logic of software engineering with the power of <span className="text-white font-bold">AI integration</span>.
+                I am a computer science student specializing in <span className="text-white font-bold">Full-Stack Development</span>. Currently pursuing MCA from Indore International College (RGPV) after completing BCA from Mandsaur University (CGPA 7.96). My journey blends the logic of software engineering with the power of <span className="text-white font-bold">AI integration</span>.
               </p>
               <p className="text-gray-400 text-lg leading-relaxed">
                 I build things that are fast, intelligent, and beautiful — from secure REST APIs to AI-driven web applications using Gemini & Claude.
@@ -52,26 +52,47 @@ const About = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="bg-[#10131A] border border-[#232732] rounded-[1.5rem] p-8 md:p-10 hover:border-[#303542] transition-colors"
+              className="bg-[#10131A] border border-[#232732] rounded-[1.5rem] p-8 md:p-10 hover:border-[#303542] transition-colors flex flex-col justify-between"
             >
-              <div className="font-mono text-gray-500 text-sm mb-6">// education.json</div>
-              <div className="flex items-start mb-6">
-                <div className="w-14 h-14 bg-[#0a2520] rounded-xl flex items-center justify-center mr-6 shrink-0 border border-[#0d3b32]">
-                  <GraduationCap className="text-[#00e5a0]" size={28} />
+              <div>
+                <div className="font-mono text-gray-500 text-sm mb-6">// education.json</div>
+                
+                {/* MCA Entry */}
+                <div className="flex items-start mb-5">
+                  <div className="w-12 h-12 bg-[#0a2520] rounded-xl flex items-center justify-center mr-4 shrink-0 border border-[#0d3b32]">
+                    <GraduationCap className="text-[#00e5a0]" size={24} />
+                  </div>
+                  <div>
+                    <div className="flex items-center space-x-2">
+                      <h3 className="text-white text-xl font-bold font-heading">MCA</h3>
+                      <span className="text-xs font-mono text-[#00e5a0] bg-[#0a2520] border border-[#0d3b32] px-2 py-0.5 rounded-full">Pursuing</span>
+                    </div>
+                    <p className="text-gray-400 text-sm">Indore International College (RGPV)</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-white text-2xl font-bold font-heading mb-1">BCA – Computer Apps</h3>
-                  <p className="text-gray-400 text-base mb-1">Mandsaur University, Mandsaur</p>
-                  <p className="font-mono text-gray-500 text-sm">2023 – Present</p>
+
+                {/* BCA Entry */}
+                <div className="flex items-start">
+                  <div className="w-12 h-12 bg-[#1a1f2b] rounded-xl flex items-center justify-center mr-4 shrink-0 border border-[#232732]">
+                    <GraduationCap className="text-gray-400" size={24} />
+                  </div>
+                  <div>
+                    <div className="flex items-center space-x-2">
+                      <h3 className="text-white text-xl font-bold font-heading">BCA</h3>
+                      <span className="text-xs font-mono text-gray-300 bg-[#1a1f2b] border border-[#232732] px-2 py-0.5 rounded-full">Completed</span>
+                    </div>
+                    <p className="text-gray-400 text-sm">Mandsaur University</p>
+                  </div>
                 </div>
               </div>
 
-              <div className="flex items-center space-x-4 mt-8">
-                <div className="px-4 py-1.5 bg-[#0a2520] border border-[#0d3b32] rounded-full">
-                  <span className="font-mono text-[#00e5a0] text-sm font-bold tracking-widest">CGPA: 7.89</span>
+              {/* Progress bar for BCA CGPA */}
+              <div className="flex items-center space-x-4 mt-6">
+                <div className="px-3 py-1 bg-[#0a2520] border border-[#0d3b32] rounded-full shrink-0">
+                  <span className="font-mono text-[#00e5a0] text-xs font-bold tracking-wider">BCA CGPA: 7.96</span>
                 </div>
                 <div className="flex-1 h-1.5 bg-[#1a1f2b] rounded-full overflow-hidden flex">
-                  <div className="h-full bg-gradient-to-r from-[var(--color-cyan-accent)] to-[var(--color-violet-accent)] w-[78.9%]"></div>
+                  <div className="h-full bg-gradient-to-r from-[var(--color-cyan-accent)] to-[var(--color-violet-accent)] w-[79.6%]"></div>
                 </div>
               </div>
             </motion.div>

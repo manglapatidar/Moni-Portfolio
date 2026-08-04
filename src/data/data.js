@@ -92,14 +92,22 @@ export const projects = [
 export const education = [
   {
     id: 1,
-    degree: "Bachelor of Computer Applications (BCA)",
-    institution: "Mandsaur University, Mandsaur",
+    degree: "Master of Computer Applications (MCA)",
+    institution: "Indore International College (RGPV), Indore",
     status: "Currently Pursuing",
-    score: "CGPA: 7.89",
+    score: "Pursuing",
     year: "Present"
   },
   {
     id: 2,
+    degree: "Bachelor of Computer Applications (BCA)",
+    institution: "Mandsaur University, Mandsaur",
+    status: "Completed",
+    score: "CGPA: 7.96",
+    year: "Completed"
+  },
+  {
+    id: 3,
     degree: "Class XII",
     institution: "Vivekananda Higher Secondary School",
     status: "Completed",
@@ -107,7 +115,7 @@ export const education = [
     year: "2023"
   },
   {
-    id: 3,
+    id: 4,
     degree: "Class X",
     institution: "Shree J.K. Public School, Sitamau",
     status: "Completed",
@@ -120,7 +128,7 @@ export const personalInfo = {
   name: "Mangla Patidar",
   roles: ["MERN Stack Developer", "AI Integration Enthusiast", "Software Developer Trainee"],
   tagline: "I build full-stack web applications powered by React, Node.js, MongoDB — and bring them to life with AI (Gemini & Claude APIs).",
-  about: "Software Developer Trainee at eSkill Indore (since Jul 2025), currently pursuing BCA at Mandsaur University (CGPA 7.89), passionate about combining full-stack development with AI integration.",
+  about: "Software Developer Trainee at eSkill Indore (since Jul 2025), MCA student at Indore International College (RGPV), BCA graduate from Mandsaur University (CGPA 7.96), passionate about combining full-stack development with AI integration.",
   email: "monipatel1084@gmail.com",
   phone: "+91 7879536876",
   location: "Sitamau, Mandsaur, MP",
