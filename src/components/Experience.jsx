@@ -1,88 +1,152 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Briefcase, GraduationCap, Calendar, MapPin, Sparkles } from 'lucide-react';
+import { education, experience } from '../data/data';
+import { sound } from '../utils/SoundEngine';
 
 const Experience = () => {
   return (
-    <section id="experience" className="py-20 relative overflow-hidden">
-      {/* Giant faded background number */}
-      <div className="absolute top-0 right-0 md:-right-10 text-[20rem] font-bold font-heading text-white opacity-[0.02] leading-none pointer-events-none select-none">
-        03
-      </div>
+    <section id="experience" className="py-28 relative">
+      
+      {/* Ambient background glow */}
+      <div className="absolute top-1/2 left-0 w-96 h-96 bg-[var(--color-cyan-accent)]/5 rounded-full blur-[160px] pointer-events-none"></div>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-          className="mb-16"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold font-heading text-white mb-2">Experience</h2>
-          <div className="h-1 w-20 bg-[var(--color-cyan-accent)]"></div>
-        </motion.div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        {/* Header */}
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full border border-[var(--color-cyan-accent)]/30 bg-[var(--color-cyan-accent)]/10 mb-4">
+            <Briefcase size={14} className="text-[var(--color-cyan-accent)]" />
+            <span className="text-[var(--color-cyan-accent)] font-mono text-xs font-semibold tracking-widest uppercase">
+              Career & Education
+            </span>
+          </div>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold font-display text-white tracking-tighter">
+            Experience & <span className="text-gradient">Timeline</span>
+          </h2>
+          <p className="mt-4 text-gray-400 max-w-xl mx-auto font-sans">
+            Professional trajectory in full-stack engineering, academic milestones, and hands-on developer training.
+          </p>
+        </div>
 
-        <div className="relative pl-6 md:pl-8 border-l border-[var(--card-border)]">
-          {/* Animated Glow Line on the border */}
-          <motion.div 
-            initial={{ height: 0 }}
-            whileInView={{ height: '100%' }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.5, ease: "easeInOut" }}
-            className="absolute top-0 left-[-1px] w-[2px] bg-[var(--color-cyan-accent)] shadow-[0_0_10px_rgba(34,211,238,0.8)]"
-          />
-
-          <motion.div 
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="relative glass-card p-6 md:p-8 rounded-sm hover:border-[var(--color-cyan-accent)]/50 transition-colors group"
-          >
-            {/* Timeline Dot */}
-            <div className="absolute top-8 -left-[31px] md:-left-[39px] w-4 h-4 rounded-full bg-[var(--bg-color)] border-2 border-[var(--color-cyan-accent)] z-10 shadow-[0_0_10px_rgba(34,211,238,0.5)] group-hover:bg-[var(--color-cyan-accent)] transition-colors" />
-
-            <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-6">
-              <div>
-                <h3 className="text-2xl font-bold font-heading text-white group-hover:text-[var(--color-cyan-accent)] transition-colors">Software Developer Trainee (MERN)</h3>
-                <h4 className="text-lg font-mono text-gray-400 mt-1">eSkill Indore</h4>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+          
+          {/* Work Experience Column */}
+          <div className="lg:col-span-7">
+            <h3 className="font-heading text-2xl font-bold text-white mb-8 flex items-center space-x-3">
+              <div className="p-2.5 rounded-xl bg-[var(--color-cyan-accent)]/10 border border-[var(--color-cyan-accent)]/30 text-[var(--color-cyan-accent)]">
+                <Briefcase size={20} />
               </div>
-              <div className="mt-2 md:mt-0 px-3 py-1 bg-[var(--color-cyan-accent)]/10 border border-[var(--color-cyan-accent)]/30 rounded-sm font-mono text-xs text-[var(--color-cyan-accent)] inline-block w-max">
-                Jul 2025 – Present | Internship
-              </div>
-            </div>
+              <span>Professional Experience</span>
+            </h3>
 
-            <ul className="space-y-3 text-gray-400 text-sm md:text-base leading-relaxed mb-6 font-sans">
-              <li className="flex items-start">
-                <span className="text-[var(--color-cyan-accent)] mr-3 mt-1 font-mono">{">"}</span>
-                <span>Built full-stack applications with React.js, Node.js, Express.js & MongoDB for better performance.</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-[var(--color-cyan-accent)] mr-3 mt-1 font-mono">{">"}</span>
-                <span>Integrated AI APIs (Google Gemini, Claude) for intelligent content generation.</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-[var(--color-cyan-accent)] mr-3 mt-1 font-mono">{">"}</span>
-                <span>Implemented JWT authentication, role-based access control & secure REST APIs.</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-[var(--color-cyan-accent)] mr-3 mt-1 font-mono">{">"}</span>
-                <span>Managed file uploads via Multer and cloud media storage via Cloudinary.</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-[var(--color-cyan-accent)] mr-3 mt-1 font-mono">{">"}</span>
-                <span>Used Redux Toolkit for global state management across complex applications.</span>
-              </li>
-            </ul>
+            <div className="relative pl-6 md:pl-8 border-l border-white/15">
+              {/* Glowing vertical line */}
+              <div className="absolute top-0 left-[-1px] w-[2px] h-full bg-gradient-to-b from-[var(--color-cyan-accent)] via-[var(--color-blue-accent)] to-transparent shadow-[0_0_15px_#22d3ee]"></div>
 
-            <div className="flex flex-wrap gap-2 pt-4 border-t border-[var(--card-border)]">
-              {['React', 'Node.js', 'MongoDB', 'Redux', 'JWT', 'Gemini API', 'Claude API'].map((tech, i) => (
-                <span key={i} className="text-xs font-mono text-gray-500 group-hover:text-gray-300 transition-colors">
-                  #{tech.replace(/\s+/g, '')}
-                </span>
+              {experience.map((exp) => (
+                <motion.div
+                  key={exp.id}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5 }}
+                  onMouseEnter={() => sound.playHover()}
+                  className="glass-card rounded-2xl p-6 md:p-8 border border-white/10 hover:border-[var(--color-cyan-accent)]/40 transition-all relative mb-8 group interactive"
+                >
+                  {/* Glowing Node Dot */}
+                  <div className="absolute top-8 -left-[31px] md:-left-[41px] w-5 h-5 rounded-full bg-[#07090E] border-2 border-[var(--color-cyan-accent)] shadow-[0_0_15px_#22d3ee] group-hover:bg-[var(--color-cyan-accent)] transition-all"></div>
+
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4">
+                    <div>
+                      <h4 className="text-xl font-bold font-heading text-white group-hover:text-[var(--color-cyan-accent)] transition-colors">
+                        {exp.role}
+                      </h4>
+                      <p className="text-gray-400 font-mono text-xs mt-1 flex items-center space-x-2">
+                        <span className="text-white font-semibold">{exp.company}</span>
+                        <span>•</span>
+                        <span className="flex items-center space-x-1">
+                          <MapPin size={12} />
+                          <span>{exp.location}</span>
+                        </span>
+                      </p>
+                    </div>
+
+                    <div className="mt-2 sm:mt-0 px-3 py-1 rounded-full bg-[var(--color-cyan-accent)]/10 border border-[var(--color-cyan-accent)]/30 font-mono text-xs font-bold text-[var(--color-cyan-accent)] w-max">
+                      {exp.period}
+                    </div>
+                  </div>
+
+                  <ul className="space-y-2.5 text-gray-300 text-sm leading-relaxed mb-6 font-sans">
+                    {exp.description.map((point, idx) => (
+                      <li key={idx} className="flex items-start space-x-2.5">
+                        <span className="text-[var(--color-cyan-accent)] font-mono font-bold mt-0.5">{`>`}</span>
+                        <span>{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div className="flex flex-wrap gap-2 pt-4 border-t border-white/10 font-mono text-xs">
+                    {['React', 'Node.js', 'Express', 'MongoDB', 'Redux', 'Gemini API', 'Claude API', 'JWT'].map((tech) => (
+                      <span key={tech} className="px-2.5 py-1 bg-white/5 border border-white/10 rounded-md text-gray-400">
+                        #{tech}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
               ))}
             </div>
-          </motion.div>
+          </div>
+
+          {/* Academic Milestone Column */}
+          <div className="lg:col-span-5">
+            <h3 className="font-heading text-2xl font-bold text-white mb-8 flex items-center space-x-3">
+              <div className="p-2.5 rounded-xl bg-[var(--color-violet-accent)]/10 border border-[var(--color-violet-accent)]/30 text-[var(--color-violet-accent)]">
+                <GraduationCap size={20} />
+              </div>
+              <span>Education Journey</span>
+            </h3>
+
+            <div className="space-y-4">
+              {education.map((edu, index) => (
+                <motion.div
+                  key={edu.id}
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: index * 0.1 }}
+                  onMouseEnter={() => sound.playHover()}
+                  className="glass-card rounded-2xl p-6 border border-white/10 hover:border-[var(--color-violet-accent)]/40 transition-all interactive group"
+                >
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <span className="px-2.5 py-0.5 rounded-full bg-[var(--color-violet-accent)]/10 border border-[var(--color-violet-accent)]/30 font-mono text-[10px] font-bold text-[var(--color-violet-accent)] uppercase">
+                        {edu.status}
+                      </span>
+                      <h4 className="font-heading font-bold text-lg text-white mt-2 group-hover:text-[var(--color-violet-accent)] transition-colors">
+                        {edu.degree}
+                      </h4>
+                      <p className="text-gray-400 text-xs font-sans mt-1">
+                        {edu.institution}
+                      </p>
+                    </div>
+
+                    <div className="text-right shrink-0 ml-4">
+                      <span className="font-mono text-xs font-bold text-[var(--color-cyan-accent)] bg-white/5 border border-white/10 px-2.5 py-1 rounded-lg inline-block">
+                        {edu.score}
+                      </span>
+                      <span className="block text-[11px] font-mono text-gray-500 mt-1">
+                        {edu.year}
+                      </span>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
         </div>
+
       </div>
     </section>
   );

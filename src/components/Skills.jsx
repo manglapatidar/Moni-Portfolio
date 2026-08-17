@@ -1,184 +1,170 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Cpu, Code, Server, Wrench, Sparkles, CheckCircle2 } from 'lucide-react';
+import { sound } from '../utils/SoundEngine';
+
+const skillCategories = [
+  {
+    id: 'all',
+    name: 'All Skills',
+    icon: Code,
+  },
+  {
+    id: 'frontend',
+    name: 'Frontend',
+    icon: Code,
+    items: [
+      { name: 'React.js', level: 90, desc: 'Component Architecture, Hooks, Custom State' },
+      { name: 'Redux Toolkit', level: 85, desc: 'Global State Management, Async Thunks' },
+      { name: 'Tailwind CSS', level: 92, desc: 'Responsive Glassmorphism & Custom Themes' },
+      { name: 'JavaScript (ES6+)', level: 90, desc: 'Promises, Async/Await, Closures, DOM' },
+      { name: 'React Router DOM', level: 88, desc: 'Client Routing, Protected Routes' },
+    ]
+  },
+  {
+    id: 'backend',
+    name: 'Backend',
+    icon: Server,
+    items: [
+      { name: 'Node.js', level: 88, desc: 'Event Loop, Streams, NPM Libraries' },
+      { name: 'Express.js', level: 90, desc: 'Middleware, Routing, Error Handling' },
+      { name: 'MongoDB', level: 85, desc: 'Schema Design, Aggregations, Indexing' },
+      { name: 'Mongoose', level: 88, desc: 'ORM, Population, Pre/Post Hooks' },
+      { name: 'JWT Authentication', level: 92, desc: 'Token Auth, Bcrypt, Role Access' },
+      { name: 'REST API Design', level: 90, desc: 'Clean Controllers, Modular Routes' },
+    ]
+  },
+  {
+    id: 'ai',
+    name: 'AI & APIs',
+    icon: Sparkles,
+    highlight: true,
+    items: [
+      { name: 'Google Gemini API', level: 90, desc: 'Prompt Engineering, Multimodal Captions' },
+      { name: 'Claude (Anthropic) API', level: 88, desc: 'Document Digests & Summaries' },
+      { name: 'Cloudinary API', level: 85, desc: 'Image Upload, CDN Optimization' },
+      { name: 'Nodemailer API', level: 82, desc: 'SMTP Email Delivery Systems' },
+    ]
+  },
+  {
+    id: 'tools',
+    name: 'Tools & DevOps',
+    icon: Wrench,
+    items: [
+      { name: 'Git & GitHub', level: 88, desc: 'Branching, Merge Conflict Resolution' },
+      { name: 'Multer', level: 85, desc: 'Multipart Form Data & File Uploads' },
+      { name: 'Axios', level: 90, desc: 'HTTP Interceptors, Error Handling' },
+      { name: 'Postman', level: 88, desc: 'API Endpoint Testing & Documentation' },
+      { name: 'VS Code', level: 95, desc: 'Extensions, Debugging, Custom Config' },
+    ]
+  }
+];
 
 const Skills = () => {
-  const categories = [
-    {
-      title: "Frontend",
-      skills: ["React.js", "Next.js", "TypeScript", "Redux Toolkit", "Tailwind CSS", "JavaScript (ES6+)", "React Router DOM"],
-      isAi: false
-    },
-    {
-      title: "Backend & Database",
-      skills: ["Node.js", "Express.js", "MongoDB", "Mongoose", "REST API Design", "JWT Authentication"],
-      isAi: false
-    },
-    {
-      title: "AI & APIs",
-      skills: ["Google Gemini API", "Claude (Anthropic) API", "Prompt Engineering", "AI Content Generation"],
-      isAi: true
-    },
-    {
-      title: "Tools & Platforms",
-      skills: ["Git & GitHub", "Cloudinary", "Multer", "Axios", "Postman", "VS Code"],
-      isAi: false
+  const [activeCategory, setActiveCategory] = useState('all');
+
+  const getSkillsToDisplay = () => {
+    if (activeCategory === 'all') {
+      return skillCategories.filter((c) => c.id !== 'all').flatMap((c) => c.items);
     }
-  ];
+    const cat = skillCategories.find((c) => c.id === activeCategory);
+    return cat ? cat.items : [];
+  };
+
+  const displayedSkills = getSkillsToDisplay();
 
   return (
-    <section id="skills" className="py-20 relative overflow-hidden">
-      {/* Giant faded background number */}
-      <div className="absolute top-0 right-0 md:-right-10 text-[20rem] font-bold font-heading text-white opacity-[0.02] leading-none pointer-events-none select-none">
-        02
-      </div>
+    <section id="skills" className="py-28 relative">
+      
+      {/* Background Ambient Glow */}
+      <div className="absolute top-1/3 right-10 w-96 h-96 bg-[var(--color-violet-accent)]/10 rounded-full blur-[150px] pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-          className="mb-16"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold font-heading text-white mb-2">Technical Arsenal</h2>
-          <div className="h-1 w-20 bg-[var(--color-cyan-accent)]"></div>
-        </motion.div>
+        
+        {/* Header */}
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full border border-[var(--color-cyan-accent)]/30 bg-[var(--color-cyan-accent)]/10 mb-4">
+            <Cpu size={14} className="text-[var(--color-cyan-accent)]" />
+            <span className="text-[var(--color-cyan-accent)] font-mono text-xs font-semibold tracking-widest uppercase">
+              Technical Arsenal
+            </span>
+          </div>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold font-display text-white tracking-tighter">
+            Skills & <span className="text-gradient">Capabilities</span>
+          </h2>
+          <p className="mt-4 text-gray-400 max-w-xl mx-auto font-sans">
+            Specialized toolkit spanning full-stack web engineering, database architecture, and generative AI APIs.
+          </p>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
-          
-          {/* Skills List */}
-          <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-8">
-            {categories.map((cat, idx) => (
-              <motion.div 
-                key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-                className="space-y-4"
-              >
-                <div className="flex items-center space-x-2 border-b border-[var(--card-border)] pb-2">
-                  {cat.isAi ? (
-                    <span className="w-2 h-2 bg-[var(--color-violet-accent)] rounded-sm"></span>
-                  ) : (
-                    <span className="w-2 h-2 bg-[var(--color-cyan-accent)] rounded-sm"></span>
-                  )}
-                  <h3 className={`font-mono font-bold ${cat.isAi ? 'text-[var(--color-violet-accent)]' : 'text-gray-200'}`}>
-                    {cat.title}
+          {/* Category Tabs */}
+          <div className="flex justify-center flex-wrap gap-3 mt-8">
+            {skillCategories.map((cat) => {
+              const Icon = cat.icon;
+              const isActive = activeCategory === cat.id;
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => {
+                    sound.playClick();
+                    setActiveCategory(cat.id);
+                  }}
+                  onMouseEnter={() => sound.playHover()}
+                  className={`flex items-center space-x-2 px-5 py-2.5 rounded-full font-mono text-xs tracking-wider transition-all duration-300 interactive ${
+                    isActive
+                      ? 'bg-gradient-to-r from-[var(--color-cyan-accent)] to-[var(--color-blue-accent)] text-black font-bold shadow-[0_0_20px_rgba(34,211,238,0.4)]'
+                      : 'glass-panel border border-white/10 text-gray-400 hover:text-white'
+                  }`}
+                >
+                  <Icon size={14} />
+                  <span>{cat.name}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Skill Cards Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {displayedSkills.map((skill, index) => (
+            <motion.div
+              key={skill.name}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: index * 0.05 }}
+              onMouseEnter={() => sound.playHover()}
+              className="glass-card rounded-2xl p-6 border border-white/10 hover:border-[var(--color-cyan-accent)]/40 transition-all group interactive"
+            >
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center space-x-3">
+                  <CheckCircle2 size={18} className="text-[var(--color-cyan-accent)] group-hover:scale-110 transition-transform" />
+                  <h3 className="font-heading font-bold text-lg text-white group-hover:text-[var(--color-cyan-accent)] transition-colors">
+                    {skill.name}
                   </h3>
                 </div>
-                
-                <div className="flex flex-wrap gap-2">
-                  {cat.skills.map((skill, sIdx) => (
-                    <span 
-                      key={sIdx} 
-                      className={`px-3 py-1 text-xs md:text-sm font-medium border rounded-sm transition-all cursor-default
-                        ${cat.isAi 
-                          ? 'bg-[var(--color-violet-accent)]/10 text-[var(--color-violet-accent)] border-[var(--color-violet-accent)]/30 hover:border-[var(--color-violet-accent)] hover:shadow-[0_0_10px_rgba(129,140,248,0.4)] hover:-translate-y-0.5' 
-                          : 'bg-[#0f172a]/50 text-gray-300 border-[var(--card-border)] hover:border-[var(--color-cyan-accent)] hover:text-[var(--color-cyan-accent)] hover:shadow-[0_0_10px_rgba(34,211,238,0.2)] hover:-translate-y-0.5'
-                        }`}
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
-          </div>
+                <span className="font-mono text-xs font-bold text-gray-400 group-hover:text-white transition-colors">
+                  {skill.level}%
+                </span>
+              </div>
 
-          {/* AI Graph Visualization */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="lg:col-span-5 relative flex justify-center items-center min-h-[300px]"
-          >
-            {/* Status Badges */}
-            <motion.div 
-              animate={{ y: [0, -5, 0] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-0 right-10 z-20 flex items-center space-x-2 px-3 py-1 rounded-sm bg-[#0A0D12] border border-[var(--color-cyan-accent)]/50 shadow-lg font-mono text-xs font-bold text-[var(--color-cyan-accent)]"
-            >
-              <span className="w-2 h-2 rounded-full bg-[var(--color-cyan-accent)] animate-pulse"></span>
-              <span>MERN.STACK // ACTIVE</span>
+              <p className="text-gray-400 text-xs mb-4 font-sans leading-relaxed">
+                {skill.desc}
+              </p>
+
+              {/* Progress Bar */}
+              <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+                <motion.div
+                  initial={{ width: 0 }}
+                  whileInView={{ width: `${skill.level}%` }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1, delay: 0.2 }}
+                  className="h-full bg-gradient-to-r from-[var(--color-cyan-accent)] to-[var(--color-violet-accent)] rounded-full shadow-[0_0_10px_#22d3ee]"
+                />
+              </div>
             </motion.div>
-            
-            <motion.div 
-              animate={{ y: [0, 5, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-              className="absolute bottom-10 left-0 md:left-10 z-20 flex items-center space-x-2 px-3 py-1 rounded-sm bg-[#0A0D12] border border-[var(--color-violet-accent)]/50 shadow-lg font-mono text-xs font-bold text-[var(--color-violet-accent)]"
-            >
-              <span className="w-2 h-2 rounded-full bg-[var(--color-violet-accent)] animate-pulse"></span>
-              <span>AI // INTEGRATED</span>
-            </motion.div>
-
-            {/* SVG Network Graph */}
-            <div className="relative w-full aspect-square max-w-[350px]">
-              <svg viewBox="0 0 100 100" className="w-full h-full overflow-visible">
-                <defs>
-                  <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="var(--color-cyan-accent)" stopOpacity="0.8" />
-                    <stop offset="100%" stopColor="var(--color-violet-accent)" stopOpacity="0.8" />
-                  </linearGradient>
-                  <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-                    <feGaussianBlur stdDeviation="2" result="blur" />
-                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                  </filter>
-                </defs>
-                
-                {/* Connecting Lines */}
-                <motion.g stroke="url(#lineGrad)" strokeWidth="0.5" fill="none">
-                  {[
-                    "M50,50 L20,30", "M50,50 L80,30", "M50,50 L20,70", "M50,50 L80,70",
-                    "M20,30 L50,15", "M80,30 L50,15", "M20,70 L50,85", "M80,70 L50,85",
-                    "M20,30 L20,70", "M80,30 L80,70"
-                  ].map((d, i) => (
-                    <motion.path 
-                      key={i} 
-                      d={d}
-                      initial={{ pathLength: 0, opacity: 0 }}
-                      whileInView={{ pathLength: 1, opacity: 1 }}
-                      transition={{ duration: 1.5, delay: i * 0.1, ease: "easeInOut" }}
-                    />
-                  ))}
-                </motion.g>
-
-                {/* Nodes */}
-                <motion.g filter="url(#glow)">
-                  {[
-                    { cx: 50, cy: 50, r: 4, c: "var(--color-violet-accent)" },
-                    { cx: 20, cy: 30, r: 2.5, c: "var(--color-cyan-accent)" },
-                    { cx: 80, cy: 30, r: 2.5, c: "var(--color-cyan-accent)" },
-                    { cx: 20, cy: 70, r: 2.5, c: "var(--color-cyan-accent)" },
-                    { cx: 80, cy: 70, r: 2.5, c: "var(--color-cyan-accent)" },
-                    { cx: 50, cy: 15, r: 2, c: "var(--color-cyan-accent)" },
-                    { cx: 50, cy: 85, r: 2, c: "var(--color-cyan-accent)" }
-                  ].map((node, i) => (
-                    <motion.circle 
-                      key={i}
-                      cx={node.cx} cy={node.cy} r={node.r} fill={node.c}
-                      initial={{ scale: 0 }}
-                      whileInView={{ scale: 1 }}
-                      transition={{ duration: 0.5, delay: 1 + i * 0.1 }}
-                      animate={ i === 0 ? { 
-                        r: [4, 5, 4],
-                        opacity: [1, 0.8, 1]
-                      } : {
-                        r: [node.r, node.r + 0.5, node.r],
-                        opacity: [0.7, 1, 0.7]
-                      }}
-                    />
-                  ))}
-                </motion.g>
-              </svg>
-            </div>
-            
-            {/* Background Glow */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-[radial-gradient(circle,var(--color-violet-accent)_0%,transparent_70%)] opacity-20 pointer-events-none"></div>
-          </motion.div>
-
+          ))}
         </div>
+
       </div>
     </section>
   );

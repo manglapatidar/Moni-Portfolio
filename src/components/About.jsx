@@ -1,162 +1,122 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { GraduationCap } from 'lucide-react';
+import { User, GraduationCap, Briefcase, Award, Sparkles, Terminal, Code, Cpu, ShieldCheck } from 'lucide-react';
+import { sound } from '../utils/SoundEngine';
+
+const highlights = [
+  {
+    title: 'Full Stack MERN',
+    desc: 'Building modern, performant web applications with React, Node.js, Express, and MongoDB.',
+    icon: Code,
+  },
+  {
+    title: 'AI Integration',
+    desc: 'Connecting web applications to Google Gemini and Anthropic Claude APIs for automated smart content generation.',
+    icon: Sparkles,
+  },
+  {
+    title: 'JWT & Security',
+    desc: 'Implementing robust authentication, Bcrypt password hashing, role-based access control, and Cloudinary media pipelines.',
+    icon: ShieldCheck,
+  },
+];
 
 const About = () => {
   return (
-    <section id="about" className="py-24 relative overflow-hidden">
+    <section id="about" className="py-28 relative">
       
-      {/* Faded Background Number */}
-      <div className="absolute top-0 right-0 md:-right-10 text-[20rem] font-bold font-heading text-white opacity-[0.02] leading-none pointer-events-none select-none">
-        01
-      </div>
+      {/* Background Ambient Glow */}
+      <div className="absolute top-1/4 left-5 w-80 h-80 bg-[var(--color-cyan-accent)]/10 rounded-full blur-[140px] pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <motion.div 
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-          className="mb-16 flex items-center"
-        >
-          <span className="font-mono text-[var(--color-cyan-accent)] mr-4 md:mr-6 text-base md:text-lg font-bold">01</span>
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold font-display text-white tracking-tighter whitespace-nowrap">Who I Am</h2>
-          <div className="h-[1px] w-full bg-gradient-to-r from-white/20 to-transparent ml-6 md:ml-10"></div>
-        </motion.div>
-
-        <div className="flex flex-col space-y-6">
-          
-          {/* Top Row: Bio & Education */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            
-            {/* Bio Card */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="bg-[#10131A] border border-[#232732] rounded-[1.5rem] p-8 md:p-10 hover:border-[#303542] transition-colors"
-            >
-              <div className="font-mono text-gray-500 text-sm mb-6">// bio.txt</div>
-              <p className="text-gray-400 text-lg leading-relaxed mb-6">
-                I am a computer science student specializing in <span className="text-white font-bold">Full-Stack Development</span>. Currently pursuing MCA from Indore International College (RGPV) after completing BCA from Mandsaur University (CGPA 7.96). My journey blends the logic of software engineering with the power of <span className="text-white font-bold">AI integration</span>.
-              </p>
-              <p className="text-gray-400 text-lg leading-relaxed">
-                I build things that are fast, intelligent, and beautiful — from secure REST APIs to AI-driven web applications using Gemini & Claude.
-              </p>
-            </motion.div>
-
-            {/* Education Card */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="bg-[#10131A] border border-[#232732] rounded-[1.5rem] p-8 md:p-10 hover:border-[#303542] transition-colors flex flex-col justify-between"
-            >
-              <div>
-                <div className="font-mono text-gray-500 text-sm mb-6">// education.json</div>
-                
-                {/* MCA Entry */}
-                <div className="flex items-start mb-5">
-                  <div className="w-12 h-12 bg-[#0a2520] rounded-xl flex items-center justify-center mr-4 shrink-0 border border-[#0d3b32]">
-                    <GraduationCap className="text-[#00e5a0]" size={24} />
-                  </div>
-                  <div>
-                    <div className="flex items-center space-x-2">
-                      <h3 className="text-white text-xl font-bold font-heading">MCA</h3>
-                      <span className="text-xs font-mono text-[#00e5a0] bg-[#0a2520] border border-[#0d3b32] px-2 py-0.5 rounded-full">Pursuing</span>
-                    </div>
-                    <p className="text-gray-400 text-sm">Indore International College (RGPV)</p>
-                  </div>
-                </div>
-
-                {/* BCA Entry */}
-                <div className="flex items-start">
-                  <div className="w-12 h-12 bg-[#1a1f2b] rounded-xl flex items-center justify-center mr-4 shrink-0 border border-[#232732]">
-                    <GraduationCap className="text-gray-400" size={24} />
-                  </div>
-                  <div>
-                    <div className="flex items-center space-x-2">
-                      <h3 className="text-white text-xl font-bold font-heading">BCA</h3>
-                      <span className="text-xs font-mono text-gray-300 bg-[#1a1f2b] border border-[#232732] px-2 py-0.5 rounded-full">Completed</span>
-                    </div>
-                    <p className="text-gray-400 text-sm">Mandsaur University</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Progress bar for BCA CGPA */}
-              <div className="flex items-center space-x-4 mt-6">
-                <div className="px-3 py-1 bg-[#0a2520] border border-[#0d3b32] rounded-full shrink-0">
-                  <span className="font-mono text-[#00e5a0] text-xs font-bold tracking-wider">BCA CGPA: 7.96</span>
-                </div>
-                <div className="flex-1 h-1.5 bg-[#1a1f2b] rounded-full overflow-hidden flex">
-                  <div className="h-full bg-gradient-to-r from-[var(--color-cyan-accent)] to-[var(--color-violet-accent)] w-[79.6%]"></div>
-                </div>
-              </div>
-            </motion.div>
-
+        
+        {/* Header */}
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full border border-[var(--color-cyan-accent)]/30 bg-[var(--color-cyan-accent)]/10 mb-4">
+            <User size={14} className="text-[var(--color-cyan-accent)]" />
+            <span className="text-[var(--color-cyan-accent)] font-mono text-xs font-semibold tracking-widest uppercase">
+              About Me
+            </span>
           </div>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold font-display text-white tracking-tighter">
+            Architecting <span className="text-gradient">Digital Solutions</span>
+          </h2>
+          <p className="mt-4 text-gray-400 max-w-xl mx-auto font-sans">
+            Passionate software developer combining full-stack MERN expertise with modern AI APIs to build high-impact web products.
+          </p>
+        </div>
 
-          {/* Bottom Row: 4 Stat Cards */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="bg-[#10131A] border border-[#232732] rounded-[1.5rem] py-10 flex flex-col items-center justify-center hover:border-[var(--color-cyan-accent)]/30 transition-colors group"
-            >
-              <h3 className="text-3xl md:text-4xl font-bold font-display tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-[var(--color-cyan-accent)] to-[var(--color-violet-accent)] mb-3 group-hover:scale-110 transition-transform">
-                MERN
-              </h3>
-              <span className="text-gray-500 text-sm font-medium">Stack</span>
-            </motion.div>
+        {/* Top Info Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch mb-16">
+          
+          {/* Main Bio Card */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="lg:col-span-7 glass-card rounded-3xl p-8 border border-white/10 flex flex-col justify-between"
+          >
+            <div>
+              <div className="flex items-center space-x-3 mb-6">
+                <Terminal size={20} className="text-[var(--color-cyan-accent)]" />
+                <h3 className="font-heading text-2xl font-bold text-white">Developer Story</h3>
+              </div>
 
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              className="bg-[#10131A] border border-[#232732] rounded-[1.5rem] py-10 flex flex-col items-center justify-center hover:border-[var(--color-cyan-accent)]/30 transition-colors group"
-            >
-              <h3 className="text-3xl md:text-4xl font-bold font-display tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-[var(--color-cyan-accent)] to-[var(--color-violet-accent)] mb-3 group-hover:scale-110 transition-transform">
-                AI/ML
-              </h3>
-              <span className="text-gray-500 text-sm font-medium">Enthusiast</span>
-            </motion.div>
+              <p className="text-gray-300 text-base leading-relaxed mb-6 font-sans">
+                I am a <strong className="text-white">Software Developer Trainee</strong> at <span className="text-[var(--color-cyan-accent)] font-semibold">eSkill Indore</span> (since Jul 2025) and currently pursuing my <strong className="text-white">Master of Computer Applications (MCA)</strong> at Indore International College (RGPV).
+              </p>
 
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: 0.5 }}
-              className="bg-[#10131A] border border-[#232732] rounded-[1.5rem] py-10 flex flex-col items-center justify-center hover:border-[var(--color-cyan-accent)]/30 transition-colors group"
-            >
-              <h3 className="text-3xl md:text-4xl font-bold font-display tracking-tighter text-[var(--color-cyan-accent)] mb-3 group-hover:scale-110 transition-transform">
-                &lt; 1
-              </h3>
-              <span className="text-gray-500 text-sm font-medium">Years Exp</span>
-            </motion.div>
+              <p className="text-gray-300 text-base leading-relaxed mb-6 font-sans">
+                With a solid foundation from my <strong className="text-white">Bachelor of Computer Applications (BCA)</strong> (CGPA 7.96), I bridge the gap between complex backend systems and beautiful frontend user experiences. My focus is engineering secure, high-scale web platforms integrated with Generative AI APIs like Gemini & Claude.
+              </p>
+            </div>
 
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: 0.6 }}
-              className="bg-[#10131A] border border-[#232732] rounded-[1.5rem] py-10 flex flex-col items-center justify-center hover:border-[var(--color-cyan-accent)]/30 transition-colors group"
-            >
-              <h3 className="text-3xl md:text-4xl font-bold font-display tracking-tighter text-[var(--color-cyan-accent)] mb-3 group-hover:scale-110 transition-transform">
-                5+
-              </h3>
-              <span className="text-gray-500 text-sm font-medium">Projects</span>
-            </motion.div>
+            {/* Quick Badges */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-6 border-t border-white/10 font-mono text-xs">
+              <div className="p-3 rounded-xl bg-white/5 border border-white/10">
+                <span className="text-gray-400 block mb-1">LOCATION</span>
+                <span className="text-white font-bold">Indore, MP</span>
+              </div>
+              <div className="p-3 rounded-xl bg-white/5 border border-white/10">
+                <span className="text-gray-400 block mb-1">DEGREE</span>
+                <span className="text-[var(--color-cyan-accent)] font-bold">MCA Pursuing</span>
+              </div>
+              <div className="p-3 rounded-xl bg-white/5 border border-white/10 col-span-2 sm:col-span-1">
+                <span className="text-gray-400 block mb-1">SPECIALTY</span>
+                <span className="text-[var(--color-violet-accent)] font-bold">MERN + AI</span>
+              </div>
+            </div>
+          </motion.div>
 
+          {/* Highlights Stack */}
+          <div className="lg:col-span-5 flex flex-col justify-between gap-4">
+            {highlights.map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <motion.div
+                  key={item.title}
+                  initial={{ opacity: 0, x: 30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  onMouseEnter={() => sound.playHover()}
+                  className="glass-card rounded-2xl p-6 border border-white/10 hover:border-[var(--color-cyan-accent)]/40 transition-all flex items-start space-x-4 interactive"
+                >
+                  <div className="p-3 rounded-xl bg-[var(--color-cyan-accent)]/10 border border-[var(--color-cyan-accent)]/30 text-[var(--color-cyan-accent)] shrink-0">
+                    <Icon size={22} />
+                  </div>
+                  <div>
+                    <h4 className="font-heading font-bold text-lg text-white mb-1">{item.title}</h4>
+                    <p className="text-gray-400 text-xs leading-relaxed font-sans">{item.desc}</p>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
 
         </div>
+
       </div>
     </section>
   );
