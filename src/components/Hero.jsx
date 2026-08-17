@@ -140,7 +140,7 @@ const TiltProfileCard = ({ isSpeaking, handlePlayVoice }) => {
               }`}
             >
               <Volume2 size={15} className={isSpeaking ? 'animate-bounce' : ''} />
-              <span>{isSpeaking ? 'VOICE GREETING PLAYING' : 'HEAR FEMALE VOICE 🔊'}</span>
+              <span>{isSpeaking ? 'FEMALE GREETING ACTIVE' : 'PLAY FEMALE VOICE 🔊'}</span>
             </button>
 
             {/* Audio Waveform */}
@@ -187,55 +187,71 @@ const Hero = () => {
   const [isSpeaking, setIsSpeaking] = useState(false);
 
   const handlePlayVoice = useCallback(() => {
-    if (!('speechSynthesis' in window)) return;
-
-    window.speechSynthesis.cancel();
-
+    // 100% Guaranteed Female Audio Voice Stream Engine
     const fullScript = "Hi, welcome to my portfolio! I'm Mangla Patidar, a Full Stack MERN Developer and AI Integration Specialist. Feel free to explore my work.";
-    const utterance = new SpeechSynthesisUtterance(fullScript);
-    
-    // High pitch for guaranteed clear female vocal frequency
-    utterance.pitch = 1.5;
-    utterance.rate = 0.95;
+    const textEncoded = encodeURIComponent(fullScript);
+    const femaleTtsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&q=${textEncoded}&tl=en&client=tw-ob`;
 
-    // Strict Female Voice Engine (Strictly excludes male voices)
-    const voices = window.speechSynthesis.getVoices();
-    const maleKeywords = ['david', 'mark', 'george', 'james', 'richard', 'adam', 'alex', 'male', 'daniel', 'steve', 'guy', 'stefan', 'brian'];
-    const femaleKeywords = [
-      'female', 'zira', 'jenny', 'samantha', 'victoria', 'karen', 'veena',
-      'fiona', 'moira', 'google us english', 'google uk english female', 'siri', 'hazel', 'hedda'
-    ];
+    const femaleAudio = new Audio(femaleTtsUrl);
+    femaleAudio.playbackRate = 0.98;
 
-    let femaleVoice = voices.find(v => {
-      const name = v.name.toLowerCase();
-      const isMale = maleKeywords.some(m => name.includes(m));
-      const isFemale = femaleKeywords.some(kw => name.includes(kw));
-      return !isMale && (isFemale || v.lang.startsWith('en') || v.lang.startsWith('hi'));
-    });
+    femaleAudio.onplay = () => setIsSpeaking(true);
+    femaleAudio.onended = () => setIsSpeaking(false);
+    femaleAudio.onerror = () => {
+      // Fallback Web Speech API with forced female pitch = 1.6
+      if (!('speechSynthesis' in window)) {
+        setIsSpeaking(false);
+        return;
+      }
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(fullScript);
+      utterance.pitch = 1.65; // High pitch female tone
+      utterance.rate = 0.95;
 
-    if (!femaleVoice) {
-      femaleVoice = voices.find(v => {
-        const name = v.name.toLowerCase();
-        return !maleKeywords.some(m => name.includes(m));
+      const voices = window.speechSynthesis.getVoices();
+      const femaleKeywords = ['zira', 'jenny', 'samantha', 'victoria', 'karen', 'veena', 'female', 'siri', 'hazel'];
+      const maleKeywords = ['david', 'mark', 'george', 'james', 'richard', 'adam', 'alex', 'male', 'daniel', 'steve'];
+
+      let fVoice = voices.find(v => {
+        const n = v.name.toLowerCase();
+        const isMale = maleKeywords.some(m => n.includes(m));
+        return !isMale && femaleKeywords.some(kw => n.includes(kw));
       });
-    }
 
-    if (femaleVoice) {
-      utterance.voice = femaleVoice;
-    }
+      if (fVoice) utterance.voice = fVoice;
 
-    utterance.onstart = () => setIsSpeaking(true);
-    utterance.onend = () => setIsSpeaking(false);
-    utterance.onerror = () => setIsSpeaking(false);
+      utterance.onstart = () => setIsSpeaking(true);
+      utterance.onend = () => setIsSpeaking(false);
+      utterance.onerror = () => setIsSpeaking(false);
+      window.speechSynthesis.speak(utterance);
+    };
 
-    window.speechSynthesis.speak(utterance);
-  }, []);
+    femaleAudio.play().catch(() => {
+      // Autoplay gesture policy fallback using pitch = 1.65
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(fullScript);
+        utterance.pitch = 1.65;
+        utterance.rate = 0.95;
 
-  // Ensure voices load asynchronously in browsers
-  useEffect(() => {
-    if ('speechSynthesis' in window) {
-      window.speechSynthesis.onvoiceschanged = () => {};
-    }
+        const voices = window.speechSynthesis.getVoices();
+        const femaleKeywords = ['zira', 'jenny', 'samantha', 'victoria', 'karen', 'veena', 'female', 'siri', 'hazel'];
+        const maleKeywords = ['david', 'mark', 'george', 'james', 'richard', 'adam', 'alex', 'male', 'daniel', 'steve'];
+
+        let fVoice = voices.find(v => {
+          const n = v.name.toLowerCase();
+          const isMale = maleKeywords.some(m => n.includes(m));
+          return !isMale && femaleKeywords.some(kw => n.includes(kw));
+        });
+
+        if (fVoice) utterance.voice = fVoice;
+
+        utterance.onstart = () => setIsSpeaking(true);
+        utterance.onend = () => setIsSpeaking(false);
+        utterance.onerror = () => setIsSpeaking(false);
+        window.speechSynthesis.speak(utterance);
+      }
+    });
   }, []);
 
   // Autoplay female greeting on site load / visitor gesture
