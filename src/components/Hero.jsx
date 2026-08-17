@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
-import { ArrowRight, Terminal, Sparkles, Code2, Cpu, Database, CheckCircle2 } from 'lucide-react';
+import { motion, useMotionValue, useTransform, useSpring, AnimatePresence } from 'framer-motion';
+import { ArrowRight, Terminal, Sparkles, Volume2, VolumeX, MessageSquare, Mic } from 'lucide-react';
 import { FaReact, FaNodeJs, FaPython, FaJsSquare } from 'react-icons/fa';
 import { sound } from '../utils/SoundEngine';
 
@@ -44,7 +44,7 @@ const MultiRoleTypewriter = () => {
   );
 };
 
-const TiltProfileCard = () => {
+const TiltProfileCard = ({ isSpeaking, setIsSpeaking, handlePlayVoice }) => {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
@@ -70,45 +70,98 @@ const TiltProfileCard = () => {
         style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        className="relative w-full max-w-[380px] h-[460px] rounded-3xl p-3 glass-panel border border-[var(--color-cyan-accent)]/30 shadow-[0_0_50px_rgba(34,211,238,0.25)] interactive cursor-pointer group"
+        className={`relative w-full max-w-[380px] h-[480px] rounded-3xl p-3 glass-panel border transition-all duration-300 interactive cursor-pointer group ${
+          isSpeaking
+            ? 'border-emerald-400 shadow-[0_0_60px_rgba(52,211,153,0.5)] ring-2 ring-emerald-400/50'
+            : 'border-[var(--color-cyan-accent)]/30 shadow-[0_0_50px_rgba(34,211,238,0.25)]'
+        }`}
       >
         {/* Glow ambient layer */}
-        <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[var(--color-cyan-accent)]/20 via-transparent to-[var(--color-violet-accent)]/20 blur-xl opacity-60 group-hover:opacity-100 transition-opacity"></div>
+        <div className={`absolute inset-0 rounded-3xl bg-gradient-to-br transition-all duration-500 blur-xl ${
+          isSpeaking
+            ? 'from-emerald-500/30 via-emerald-400/20 to-[var(--color-cyan-accent)]/30 opacity-100'
+            : 'from-[var(--color-cyan-accent)]/20 via-transparent to-[var(--color-violet-accent)]/20 opacity-60 group-hover:opacity-100'
+        }`}></div>
+
+        {/* Floating Animated Speech Bubble */}
+        <AnimatePresence>
+          {isSpeaking && (
+            <motion.div
+              initial={{ opacity: 0, y: 15, scale: 0.8 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 10, scale: 0.8 }}
+              className="absolute -top-12 left-1/2 -translate-x-1/2 z-40 bg-[#07090E]/95 border border-emerald-400/60 px-4 py-2 rounded-2xl shadow-[0_0_25px_rgba(52,211,153,0.4)] backdrop-blur-md flex items-center space-x-2 text-xs font-mono text-emerald-300 font-bold whitespace-nowrap"
+            >
+              <Mic size={14} className="text-emerald-400 animate-pulse" />
+              <span>"Hi! Welcome to my portfolio!"</span>
+              <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-3 h-3 bg-[#07090E] border-r border-b border-emerald-400/60 rotate-45"></div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Inner Card Frame */}
         <div className="relative w-full h-full rounded-2xl overflow-hidden bg-[#07090E] border border-white/10">
           
-          <img
+          {/* Profile Photo with Lip-Sync Movement */}
+          <motion.img
             src="/Monudii.png"
             alt="Mangla Patidar"
+            animate={isSpeaking ? {
+              scale: [1, 1.03, 1, 1.02, 1],
+              y: [0, -2, 0, -1, 0]
+            } : { scale: 1, y: 0 }}
+            transition={isSpeaking ? { duration: 0.4, repeat: Infinity, ease: "easeInOut" } : { duration: 0.5 }}
             className="w-full h-full object-cover object-bottom filter contrast-[1.05] brightness-95 group-hover:scale-105 transition-transform duration-700"
           />
 
-          {/* Animated Futuristic Hologram Overlay */}
+          {/* Hologram / Laser Scanline */}
           <motion.div
             animate={{ top: ['-20%', '120%'] }}
             transition={{ duration: 3.5, ease: 'linear', repeat: Infinity }}
-            className="absolute left-0 right-0 h-1.5 bg-gradient-to-r from-transparent via-[var(--color-cyan-accent)] to-transparent shadow-[0_0_15px_#22d3ee] z-20 pointer-events-none opacity-80"
+            className={`absolute left-0 right-0 h-1.5 bg-gradient-to-r from-transparent via-[var(--color-cyan-accent)] to-transparent shadow-[0_0_15px_#22d3ee] z-20 pointer-events-none ${
+              isSpeaking ? 'opacity-100 shadow-[0_0_20px_#34d399]' : 'opacity-80'
+            }`}
           />
 
-          {/* Corner Cyber HUD Accents */}
+          {/* Cyber HUD Corner Accents */}
           <div className="absolute top-3 left-3 w-6 h-6 border-t-2 border-l-2 border-[var(--color-cyan-accent)] z-20"></div>
           <div className="absolute top-3 right-3 w-6 h-6 border-t-2 border-r-2 border-[var(--color-cyan-accent)] z-20"></div>
           <div className="absolute bottom-3 left-3 w-6 h-6 border-b-2 border-l-2 border-[var(--color-cyan-accent)] z-20"></div>
           <div className="absolute bottom-3 right-3 w-6 h-6 border-b-2 border-r-2 border-[var(--color-cyan-accent)] z-20"></div>
 
-          {/* Live Status HUD Badge inside image */}
-          <div className="absolute bottom-4 left-4 right-4 bg-[#07090E]/85 backdrop-blur-md border border-[var(--color-cyan-accent)]/40 px-3 py-2 rounded-xl flex items-center justify-between z-20 shadow-lg">
-            <div className="flex items-center space-x-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
-              <span className="text-[11px] font-mono text-emerald-400 font-bold tracking-wider">AI_POWERED</span>
+          {/* Voice Greeting Action Button & HUD */}
+          <div className="absolute bottom-4 left-3 right-3 bg-[#07090E]/90 backdrop-blur-md border border-[var(--color-cyan-accent)]/40 p-2.5 rounded-xl flex items-center justify-between z-20 shadow-lg">
+            
+            <button
+              onClick={handlePlayVoice}
+              onMouseEnter={() => sound.playHover()}
+              className={`flex items-center space-x-2 px-3 py-1.5 rounded-lg font-mono text-xs font-bold transition-all interactive ${
+                isSpeaking
+                  ? 'bg-emerald-500 text-black shadow-[0_0_15px_rgba(52,211,153,0.8)]'
+                  : 'bg-[var(--color-cyan-accent)]/15 text-[var(--color-cyan-accent)] border border-[var(--color-cyan-accent)]/40 hover:bg-[var(--color-cyan-accent)] hover:text-black'
+              }`}
+            >
+              <Volume2 size={15} className={isSpeaking ? 'animate-bounce' : ''} />
+              <span>{isSpeaking ? 'SPEAKING...' : 'PLAY VOICE'}</span>
+            </button>
+
+            {/* Audio Waveform Visualizer */}
+            <div className="flex items-center space-x-1">
+              {[0, 1, 2, 3].map((i) => (
+                <motion.span
+                  key={i}
+                  animate={isSpeaking ? { height: ['4px', '16px', '6px', '18px', '4px'] } : { height: '6px' }}
+                  transition={isSpeaking ? { duration: 0.5, repeat: Infinity, delay: i * 0.1 } : {}}
+                  className={`w-1 rounded-full ${isSpeaking ? 'bg-emerald-400' : 'bg-gray-600'}`}
+                />
+              ))}
             </div>
-            <span className="text-[10px] font-mono text-gray-400 uppercase tracking-widest">INDORE, MP</span>
+
           </div>
 
         </div>
 
-        {/* Floating tech stack pills */}
+        {/* Floating Tech stack pills */}
         <motion.div
           animate={{ y: [0, -10, 0] }}
           transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
@@ -126,12 +179,42 @@ const TiltProfileCard = () => {
           <Sparkles size={20} className="text-[var(--color-violet-accent)]" />
           <span className="text-xs font-mono font-bold text-white">Gemini & Claude AI</span>
         </motion.div>
+
       </motion.div>
     </div>
   );
 };
 
 const Hero = () => {
+  const [isSpeaking, setIsSpeaking] = useState(false);
+
+  const handlePlayVoice = () => {
+    sound.playClick();
+    if (!('speechSynthesis' in window)) {
+      alert("Browser Speech Synthesis is not supported on this browser.");
+      return;
+    }
+
+    // Cancel ongoing speech
+    window.speechSynthesis.cancel();
+
+    const textToSpeak = "Hi! Welcome to my portfolio!";
+    const utterance = new SpeechSynthesisUtterance(textToSpeak);
+    utterance.rate = 0.95;
+    utterance.pitch = 1.0;
+
+    // Pick English Voice if available
+    const voices = window.speechSynthesis.getVoices();
+    const clearVoice = voices.find(v => v.lang.includes('en') || v.name.includes('Google') || v.name.includes('Natural'));
+    if (clearVoice) utterance.voice = clearVoice;
+
+    utterance.onstart = () => setIsSpeaking(true);
+    utterance.onend = () => setIsSpeaking(false);
+    utterance.onerror = () => setIsSpeaking(false);
+
+    window.speechSynthesis.speak(utterance);
+  };
+
   return (
     <section id="home" className="relative min-h-screen flex items-center pt-28 pb-16 overflow-hidden">
       
@@ -192,35 +275,39 @@ const Hero = () => {
 
           {/* Action CTAs */}
           <div className="flex flex-wrap gap-4 items-center">
+            <button
+              onClick={handlePlayVoice}
+              onMouseEnter={() => sound.playHover()}
+              className="group flex items-center space-x-3 bg-gradient-to-r from-emerald-400 via-[var(--color-cyan-accent)] to-[var(--color-violet-accent)] text-black px-7 py-4 rounded-2xl font-bold font-mono text-xs sm:text-sm tracking-wider uppercase shadow-[0_0_35px_rgba(52,211,153,0.5)] hover:shadow-[0_0_50px_rgba(52,211,153,0.8)] hover:scale-105 transition-all interactive"
+            >
+              <Volume2 size={18} className={isSpeaking ? 'animate-bounce' : ''} />
+              <span>{isSpeaking ? 'Voice Playing...' : 'Hear Voice Greeting 🔊'}</span>
+            </button>
+
             <a
               href="#projects"
               onMouseEnter={() => sound.playHover()}
               onClick={() => sound.playClick()}
-              className="group flex items-center space-x-3 bg-gradient-to-r from-[var(--color-cyan-accent)] via-[var(--color-blue-accent)] to-[var(--color-violet-accent)] text-black px-8 py-4 rounded-2xl font-bold font-mono text-sm tracking-wider uppercase shadow-[0_0_35px_rgba(34,211,238,0.4)] hover:shadow-[0_0_50px_rgba(129,140,248,0.7)] hover:scale-105 transition-all interactive"
+              className="flex items-center space-x-2 px-7 py-4 rounded-2xl border border-white/20 glass-panel hover:bg-white/10 text-white font-mono text-xs sm:text-sm font-semibold tracking-wider uppercase hover:border-[var(--color-cyan-accent)] transition-all interactive"
             >
               <span>Explore Projects</span>
-              <ArrowRight size={18} className="group-hover:translate-x-1.5 transition-transform" />
-            </a>
-
-            <a
-              href="#contact"
-              onMouseEnter={() => sound.playHover()}
-              onClick={() => sound.playClick()}
-              className="flex items-center space-x-2 px-7 py-4 rounded-2xl border border-white/20 glass-panel hover:bg-white/10 text-white font-mono text-sm font-semibold tracking-wider uppercase hover:border-[var(--color-cyan-accent)] transition-all interactive"
-            >
-              <span>Contact Me</span>
+              <ArrowRight size={18} />
             </a>
           </div>
         </motion.div>
 
-        {/* Right Interactive 3D Card Column */}
+        {/* Right Interactive 3D Card Column with Lip-Sync Avatar */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           className="lg:col-span-5 flex justify-center items-center"
         >
-          <TiltProfileCard />
+          <TiltProfileCard
+            isSpeaking={isSpeaking}
+            setIsSpeaking={setIsSpeaking}
+            handlePlayVoice={handlePlayVoice}
+          />
         </motion.div>
 
       </div>
