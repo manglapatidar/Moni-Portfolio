@@ -175,18 +175,18 @@ const Hero = () => {
           </p>
 
           {/* Stats Bar */}
-          <div className="grid grid-cols-3 gap-4 max-w-lg mb-10 py-4 px-6 rounded-2xl glass-panel border border-white/10">
+          <div className="grid grid-cols-3 gap-2 sm:gap-4 max-w-lg mb-10 py-3.5 px-4 sm:px-6 rounded-2xl glass-panel border border-white/10">
             <div>
-              <div className="text-2xl sm:text-3xl font-extrabold font-display text-white text-gradient">3+</div>
-              <div className="text-[11px] font-mono text-gray-400 uppercase tracking-wider">Production Apps</div>
+              <div className="text-xl sm:text-3xl font-extrabold font-display text-white text-gradient">3+</div>
+              <div className="text-[9px] sm:text-[11px] font-mono text-gray-400 uppercase tracking-wider">Production Apps</div>
             </div>
             <div>
-              <div className="text-2xl sm:text-3xl font-extrabold font-display text-white text-gradient">Gemini & Claude</div>
-              <div className="text-[11px] font-mono text-gray-400 uppercase tracking-wider">AI Integration</div>
+              <div className="text-base sm:text-2xl md:text-3xl font-extrabold font-display text-white text-gradient">Gemini & Claude</div>
+              <div className="text-[9px] sm:text-[11px] font-mono text-gray-400 uppercase tracking-wider">AI Integration</div>
             </div>
             <div>
-              <div className="text-2xl sm:text-3xl font-extrabold font-display text-white text-gradient">MCA</div>
-              <div className="text-[11px] font-mono text-gray-400 uppercase tracking-wider">Current Pursuing</div>
+              <div className="text-xl sm:text-3xl font-extrabold font-display text-white text-gradient">MCA</div>
+              <div className="text-[9px] sm:text-[11px] font-mono text-gray-400 uppercase tracking-wider">Current Pursuing</div>
             </div>
           </div>
 
