@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion, useMotionValue, useTransform, useSpring, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Terminal, Sparkles, Volume2, VolumeX, MessageSquare, Mic } from 'lucide-react';
-import { FaReact, FaNodeJs, FaPython, FaJsSquare } from 'react-icons/fa';
+import { ArrowRight, Terminal, Sparkles, Volume2, Mic } from 'lucide-react';
+import { FaReact } from 'react-icons/fa';
 import { sound } from '../utils/SoundEngine';
 
 const roles = [
@@ -44,7 +44,7 @@ const MultiRoleTypewriter = () => {
   );
 };
 
-const TiltProfileCard = ({ isSpeaking, setIsSpeaking, handlePlayVoice }) => {
+const TiltProfileCard = ({ isSpeaking, handlePlayVoice }) => {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
@@ -72,14 +72,14 @@ const TiltProfileCard = ({ isSpeaking, setIsSpeaking, handlePlayVoice }) => {
         onMouseLeave={handleMouseLeave}
         className={`relative w-full max-w-[380px] h-[480px] rounded-3xl p-3 glass-panel border transition-all duration-300 interactive cursor-pointer group ${
           isSpeaking
-            ? 'border-emerald-400 shadow-[0_0_60px_rgba(52,211,153,0.5)] ring-2 ring-emerald-400/50'
+            ? 'border-pink-400 shadow-[0_0_60px_rgba(244,114,182,0.6)] ring-2 ring-pink-400/50'
             : 'border-[var(--color-cyan-accent)]/30 shadow-[0_0_50px_rgba(34,211,238,0.25)]'
         }`}
       >
         {/* Glow ambient layer */}
         <div className={`absolute inset-0 rounded-3xl bg-gradient-to-br transition-all duration-500 blur-xl ${
           isSpeaking
-            ? 'from-emerald-500/30 via-emerald-400/20 to-[var(--color-cyan-accent)]/30 opacity-100'
+            ? 'from-pink-500/40 via-purple-400/20 to-[var(--color-cyan-accent)]/30 opacity-100'
             : 'from-[var(--color-cyan-accent)]/20 via-transparent to-[var(--color-violet-accent)]/20 opacity-60 group-hover:opacity-100'
         }`}></div>
 
@@ -90,11 +90,11 @@ const TiltProfileCard = ({ isSpeaking, setIsSpeaking, handlePlayVoice }) => {
               initial={{ opacity: 0, y: 15, scale: 0.8 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 10, scale: 0.8 }}
-              className="absolute -top-12 left-1/2 -translate-x-1/2 z-40 bg-[#07090E]/95 border border-emerald-400/60 px-4 py-2 rounded-2xl shadow-[0_0_25px_rgba(52,211,153,0.4)] backdrop-blur-md flex items-center space-x-2 text-xs font-mono text-emerald-300 font-bold whitespace-nowrap"
+              className="absolute -top-12 left-1/2 -translate-x-1/2 z-40 bg-[#07090E]/95 border border-pink-400/80 px-4 py-2 rounded-2xl shadow-[0_0_25px_rgba(244,114,182,0.5)] backdrop-blur-md flex items-center space-x-2 text-xs font-mono text-pink-300 font-bold whitespace-nowrap"
             >
-              <Mic size={14} className="text-emerald-400 animate-pulse" />
+              <Mic size={14} className="text-pink-400 animate-pulse" />
               <span>"Hi! Welcome to my portfolio!"</span>
-              <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-3 h-3 bg-[#07090E] border-r border-b border-emerald-400/60 rotate-45"></div>
+              <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-3 h-3 bg-[#07090E] border-r border-b border-pink-400/80 rotate-45"></div>
             </motion.div>
           )}
         </AnimatePresence>
@@ -110,7 +110,7 @@ const TiltProfileCard = ({ isSpeaking, setIsSpeaking, handlePlayVoice }) => {
               scale: [1, 1.03, 1, 1.02, 1],
               y: [0, -2, 0, -1, 0]
             } : { scale: 1, y: 0 }}
-            transition={isSpeaking ? { duration: 0.4, repeat: Infinity, ease: "easeInOut" } : { duration: 0.5 }}
+            transition={isSpeaking ? { duration: 0.35, repeat: Infinity, ease: "easeInOut" } : { duration: 0.5 }}
             className="w-full h-full object-cover object-bottom filter contrast-[1.05] brightness-95 group-hover:scale-105 transition-transform duration-700"
           />
 
@@ -119,7 +119,7 @@ const TiltProfileCard = ({ isSpeaking, setIsSpeaking, handlePlayVoice }) => {
             animate={{ top: ['-20%', '120%'] }}
             transition={{ duration: 3.5, ease: 'linear', repeat: Infinity }}
             className={`absolute left-0 right-0 h-1.5 bg-gradient-to-r from-transparent via-[var(--color-cyan-accent)] to-transparent shadow-[0_0_15px_#22d3ee] z-20 pointer-events-none ${
-              isSpeaking ? 'opacity-100 shadow-[0_0_20px_#34d399]' : 'opacity-80'
+              isSpeaking ? 'opacity-100 shadow-[0_0_20px_#f472b6]' : 'opacity-80'
             }`}
           />
 
@@ -137,7 +137,7 @@ const TiltProfileCard = ({ isSpeaking, setIsSpeaking, handlePlayVoice }) => {
               onMouseEnter={() => sound.playHover()}
               className={`flex items-center space-x-2 px-3 py-1.5 rounded-lg font-mono text-xs font-bold transition-all interactive ${
                 isSpeaking
-                  ? 'bg-emerald-500 text-black shadow-[0_0_15px_rgba(52,211,153,0.8)]'
+                  ? 'bg-pink-500 text-black shadow-[0_0_15px_rgba(244,114,182,0.8)]'
                   : 'bg-[var(--color-cyan-accent)]/15 text-[var(--color-cyan-accent)] border border-[var(--color-cyan-accent)]/40 hover:bg-[var(--color-cyan-accent)] hover:text-black'
               }`}
             >
@@ -150,9 +150,9 @@ const TiltProfileCard = ({ isSpeaking, setIsSpeaking, handlePlayVoice }) => {
               {[0, 1, 2, 3].map((i) => (
                 <motion.span
                   key={i}
-                  animate={isSpeaking ? { height: ['4px', '16px', '6px', '18px', '4px'] } : { height: '6px' }}
-                  transition={isSpeaking ? { duration: 0.5, repeat: Infinity, delay: i * 0.1 } : {}}
-                  className={`w-1 rounded-full ${isSpeaking ? 'bg-emerald-400' : 'bg-gray-600'}`}
+                  animate={isSpeaking ? { height: ['4px', '18px', '6px', '20px', '4px'] } : { height: '6px' }}
+                  transition={isSpeaking ? { duration: 0.4, repeat: Infinity, delay: i * 0.08 } : {}}
+                  className={`w-1 rounded-full ${isSpeaking ? 'bg-pink-400' : 'bg-gray-600'}`}
                 />
               ))}
             </div>
@@ -188,32 +188,78 @@ const TiltProfileCard = ({ isSpeaking, setIsSpeaking, handlePlayVoice }) => {
 const Hero = () => {
   const [isSpeaking, setIsSpeaking] = useState(false);
 
-  const handlePlayVoice = () => {
-    sound.playClick();
-    if (!('speechSynthesis' in window)) {
-      alert("Browser Speech Synthesis is not supported on this browser.");
-      return;
-    }
+  const handlePlayVoice = useCallback(() => {
+    if (!('speechSynthesis' in window)) return;
 
-    // Cancel ongoing speech
+    // Stop existing speech
     window.speechSynthesis.cancel();
 
     const textToSpeak = "Hi! Welcome to my portfolio!";
     const utterance = new SpeechSynthesisUtterance(textToSpeak);
+    
+    // Pitch set for natural clear female voice
+    utterance.pitch = 1.35;
     utterance.rate = 0.95;
-    utterance.pitch = 1.0;
 
-    // Pick English Voice if available
+    // Search specifically for female English voices
     const voices = window.speechSynthesis.getVoices();
-    const clearVoice = voices.find(v => v.lang.includes('en') || v.name.includes('Google') || v.name.includes('Natural'));
-    if (clearVoice) utterance.voice = clearVoice;
+    const femaleKeywords = [
+      'female', 'zira', 'jenny', 'samantha', 'victoria', 'karen', 'veena',
+      'fiona', 'moira', 'google us english', 'google uk english female', 'siri'
+    ];
+
+    let selectedFemaleVoice = voices.find(v => {
+      const name = v.name.toLowerCase();
+      return (v.lang.startsWith('en') || v.lang.startsWith('hi')) &&
+        femaleKeywords.some(keyword => name.includes(keyword));
+    });
+
+    if (!selectedFemaleVoice) {
+      selectedFemaleVoice = voices.find(v => v.lang.startsWith('en'));
+    }
+
+    if (selectedFemaleVoice) {
+      utterance.voice = selectedFemaleVoice;
+    }
 
     utterance.onstart = () => setIsSpeaking(true);
     utterance.onend = () => setIsSpeaking(false);
     utterance.onerror = () => setIsSpeaking(false);
 
     window.speechSynthesis.speak(utterance);
-  };
+  }, []);
+
+  // Auto-play female voice greeting on site load / user enter
+  useEffect(() => {
+    let triggered = false;
+
+    const autoPlay = () => {
+      if (triggered) return;
+      triggered = true;
+      handlePlayVoice();
+
+      window.removeEventListener('pointerdown', autoPlay);
+      window.removeEventListener('keydown', autoPlay);
+      window.removeEventListener('mousemove', autoPlay);
+    };
+
+    // Attempt direct auto-play after 800ms
+    const timer = setTimeout(() => {
+      autoPlay();
+    }, 800);
+
+    // Fallback for browsers enforcing user gesture audio policy
+    window.addEventListener('pointerdown', autoPlay);
+    window.addEventListener('keydown', autoPlay);
+    window.addEventListener('mousemove', autoPlay);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('pointerdown', autoPlay);
+      window.removeEventListener('keydown', autoPlay);
+      window.removeEventListener('mousemove', autoPlay);
+    };
+  }, [handlePlayVoice]);
 
   return (
     <section id="home" className="relative min-h-screen flex items-center pt-28 pb-16 overflow-hidden">
@@ -276,12 +322,15 @@ const Hero = () => {
           {/* Action CTAs */}
           <div className="flex flex-wrap gap-4 items-center">
             <button
-              onClick={handlePlayVoice}
+              onClick={() => {
+                sound.playClick();
+                handlePlayVoice();
+              }}
               onMouseEnter={() => sound.playHover()}
-              className="group flex items-center space-x-3 bg-gradient-to-r from-emerald-400 via-[var(--color-cyan-accent)] to-[var(--color-violet-accent)] text-black px-7 py-4 rounded-2xl font-bold font-mono text-xs sm:text-sm tracking-wider uppercase shadow-[0_0_35px_rgba(52,211,153,0.5)] hover:shadow-[0_0_50px_rgba(52,211,153,0.8)] hover:scale-105 transition-all interactive"
+              className="group flex items-center space-x-3 bg-gradient-to-r from-pink-500 via-purple-500 to-[var(--color-cyan-accent)] text-white px-7 py-4 rounded-2xl font-bold font-mono text-xs sm:text-sm tracking-wider uppercase shadow-[0_0_35px_rgba(244,114,182,0.5)] hover:shadow-[0_0_50px_rgba(244,114,182,0.8)] hover:scale-105 transition-all interactive"
             >
               <Volume2 size={18} className={isSpeaking ? 'animate-bounce' : ''} />
-              <span>{isSpeaking ? 'Voice Playing...' : 'Hear Voice Greeting 🔊'}</span>
+              <span>{isSpeaking ? 'Speaking...' : 'Play Female Voice 🔊'}</span>
             </button>
 
             <a
@@ -305,8 +354,10 @@ const Hero = () => {
         >
           <TiltProfileCard
             isSpeaking={isSpeaking}
-            setIsSpeaking={setIsSpeaking}
-            handlePlayVoice={handlePlayVoice}
+            handlePlayVoice={() => {
+              sound.playClick();
+              handlePlayVoice();
+            }}
           />
         </motion.div>
 
