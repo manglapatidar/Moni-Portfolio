@@ -44,47 +44,6 @@ const MultiRoleTypewriter = () => {
   );
 };
 
-// SVG Dynamic Lip-Sync Mouth Element
-const LipSyncMouth = ({ isSpeaking, mouthOpening }) => {
-  if (!isSpeaking) return null;
-
-  // Calculate dynamic mouth height morphing from 3px (closed) to 16px (open)
-  const openHeight = 3 + mouthOpening * 13;
-
-  return (
-    <div className="absolute top-[61.5%] left-[49.5%] -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-none w-10 h-6 flex items-center justify-center">
-      <svg width="34" height="22" viewBox="0 0 34 22" className="filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-        {/* Dark inner mouth cavity */}
-        <ellipse
-          cx="17"
-          cy="11"
-          rx="11"
-          ry={Math.max(1, openHeight / 2)}
-          fill="#310a14"
-        />
-        {/* Subtle white teeth line when mouth opens */}
-        {openHeight > 6 && (
-          <path
-            d={`M 9,${11 - openHeight / 3} Q 17,${12 - openHeight / 3} 25,${11 - openHeight / 3}`}
-            stroke="#fefefe"
-            strokeWidth="1.8"
-            fill="none"
-            opacity="0.9"
-          />
-        )}
-        {/* Lips Contour Shading */}
-        <path
-          d={`M 6,11 Q 17,${11 - openHeight / 2 - 1} 28,11 Q 17,${11 + openHeight / 2 + 1} 6,11 Z`}
-          stroke="#a3485e"
-          strokeWidth="1.2"
-          fill="none"
-          opacity="0.85"
-        />
-      </svg>
-    </div>
-  );
-};
-
 const TiltProfileCard = ({ isSpeaking, mouthOpening, handlePlayVoice }) => {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -114,14 +73,14 @@ const TiltProfileCard = ({ isSpeaking, mouthOpening, handlePlayVoice }) => {
         onClick={handlePlayVoice}
         className={`relative w-full max-w-[380px] h-[480px] rounded-3xl p-3 glass-panel border transition-all duration-300 interactive cursor-pointer group ${
           isSpeaking
-            ? 'border-pink-400 shadow-[0_0_60px_rgba(244,114,182,0.65)] ring-2 ring-pink-400/50'
+            ? 'border-pink-400 shadow-[0_0_65px_rgba(244,114,182,0.7)] ring-2 ring-pink-400/50'
             : 'border-[var(--color-cyan-accent)]/30 shadow-[0_0_50px_rgba(34,211,238,0.25)]'
         }`}
       >
         {/* Ambient Glow */}
         <div className={`absolute inset-0 rounded-3xl bg-gradient-to-br transition-all duration-500 blur-xl ${
           isSpeaking
-            ? 'from-pink-500/40 via-purple-400/25 to-[var(--color-cyan-accent)]/30 opacity-100'
+            ? 'from-pink-500/40 via-purple-400/30 to-[var(--color-cyan-accent)]/30 opacity-100'
             : 'from-[var(--color-cyan-accent)]/20 via-transparent to-[var(--color-violet-accent)]/20 opacity-60 group-hover:opacity-100'
         }`}></div>
 
@@ -132,7 +91,7 @@ const TiltProfileCard = ({ isSpeaking, mouthOpening, handlePlayVoice }) => {
               initial={{ opacity: 0, y: 15, scale: 0.8 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 10, scale: 0.8 }}
-              className="absolute -top-16 left-1/2 -translate-x-1/2 z-40 bg-[#07090E]/95 border border-pink-400/80 px-4 py-2.5 rounded-2xl shadow-[0_0_30px_rgba(244,114,182,0.5)] backdrop-blur-md flex items-center space-x-2 text-[11px] sm:text-xs font-mono text-pink-300 font-bold max-w-[320px] text-center"
+              className="absolute -top-16 left-1/2 -translate-x-1/2 z-40 bg-[#07090E]/95 border border-pink-400/80 px-4 py-2.5 rounded-2xl shadow-[0_0_30px_rgba(244,114,182,0.6)] backdrop-blur-md flex items-center space-x-2 text-[11px] sm:text-xs font-mono text-pink-300 font-bold max-w-[320px] text-center"
             >
               <Mic size={14} className="text-pink-400 animate-pulse shrink-0" />
               <span>"Hi, welcome to my portfolio! I'm Mangla Patidar..."</span>
@@ -144,20 +103,34 @@ const TiltProfileCard = ({ isSpeaking, mouthOpening, handlePlayVoice }) => {
         {/* Inner Card Frame */}
         <div className="relative w-full h-full rounded-2xl overflow-hidden bg-[#07090E] border border-white/10">
           
-          {/* Base Photo */}
+          {/* Base Photo with Lip Sync Natural Motion */}
           <motion.img
             src="/Monudii.png"
             alt="Mangla Patidar"
             animate={isSpeaking ? {
-              scale: [1, 1.02, 1, 1.01, 1],
-              y: [0, -1.5, 0, -1, 0]
+              scale: [1, 1.02 + mouthOpening * 0.02, 1, 1.015 + mouthOpening * 0.015, 1],
+              y: [0, -2 - mouthOpening * 2, 0, -1, 0]
             } : { scale: 1, y: 0 }}
-            transition={isSpeaking ? { duration: 0.35, repeat: Infinity, ease: "easeInOut" } : { duration: 0.5 }}
+            transition={isSpeaking ? { duration: 0.3, repeat: Infinity, ease: "easeInOut" } : { duration: 0.5 }}
             className="w-full h-full object-cover object-bottom filter contrast-[1.05] brightness-95 group-hover:scale-105 transition-transform duration-700"
           />
 
-          {/* Dynamic SVG Lip-Sync Mouth Overlay */}
-          <LipSyncMouth isSpeaking={isSpeaking} mouthOpening={mouthOpening} />
+          {/* Hologram / Soundwave Aura Halo when speaking */}
+          <AnimatePresence>
+            {isSpeaking && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.6 }}
+                exit={{ opacity: 0 }}
+                className="absolute inset-0 bg-radial from-pink-500/20 via-transparent to-transparent pointer-events-none z-20 flex items-center justify-center"
+              >
+                <div
+                  className="w-48 h-48 rounded-full border border-pink-400/50 shadow-[0_0_40px_rgba(244,114,182,0.4)] animate-ping"
+                  style={{ animationDuration: `${0.6 / Math.max(0.3, mouthOpening)}s` }}
+                ></div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* Laser Scanline */}
           <motion.div
@@ -174,23 +147,31 @@ const TiltProfileCard = ({ isSpeaking, mouthOpening, handlePlayVoice }) => {
           <div className="absolute bottom-3 left-3 w-6 h-6 border-b-2 border-l-2 border-[var(--color-cyan-accent)] z-20"></div>
           <div className="absolute bottom-3 right-3 w-6 h-6 border-b-2 border-r-2 border-[var(--color-cyan-accent)] z-20"></div>
 
-          {/* Status Overlay HUD */}
+          {/* Status Overlay HUD & Voice Trigger */}
           <div className="absolute bottom-4 left-3 right-3 bg-[#07090E]/90 backdrop-blur-md border border-[var(--color-cyan-accent)]/40 p-2.5 rounded-xl flex items-center justify-between z-20 shadow-lg">
             
-            <div className="flex items-center space-x-2">
-              <span className={`w-2.5 h-2.5 rounded-full animate-ping ${isSpeaking ? 'bg-pink-400' : 'bg-emerald-400'}`}></span>
-              <span className={`text-[11px] font-mono font-bold tracking-wider ${isSpeaking ? 'text-pink-400' : 'text-emerald-400'}`}>
-                {isSpeaking ? 'AI_VOICE_SPEAKING' : 'AI_AVATAR_READY'}
-              </span>
-            </div>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                handlePlayVoice();
+              }}
+              className={`flex items-center space-x-2 px-3 py-1.5 rounded-lg font-mono text-xs font-bold transition-all interactive ${
+                isSpeaking
+                  ? 'bg-pink-500 text-black shadow-[0_0_20px_rgba(244,114,182,0.9)] animate-pulse'
+                  : 'bg-[var(--color-cyan-accent)]/15 text-[var(--color-cyan-accent)] border border-[var(--color-cyan-accent)]/40 hover:bg-[var(--color-cyan-accent)] hover:text-black'
+              }`}
+            >
+              <Volume2 size={15} className={isSpeaking ? 'animate-bounce' : ''} />
+              <span>{isSpeaking ? 'VOICE GREETING ACTIVE' : 'HEAR FEMALE VOICE 🔊'}</span>
+            </button>
 
             {/* Audio Waveform */}
             <div className="flex items-center space-x-1">
               {[0, 1, 2, 3].map((i) => (
                 <motion.span
                   key={i}
-                  animate={isSpeaking ? { height: ['4px', `${12 + mouthOpening * 10}px`, '6px', '18px', '4px'] } : { height: '6px' }}
-                  transition={isSpeaking ? { duration: 0.3, repeat: Infinity, delay: i * 0.08 } : {}}
+                  animate={isSpeaking ? { height: ['4px', `${12 + mouthOpening * 14}px`, '6px', '22px', '4px'] } : { height: '6px' }}
+                  transition={isSpeaking ? { duration: 0.25, repeat: Infinity, delay: i * 0.06 } : {}}
                   className={`w-1 rounded-full ${isSpeaking ? 'bg-pink-400' : 'bg-gray-600'}`}
                 />
               ))}
@@ -236,44 +217,48 @@ const Hero = () => {
     const fullScript = "Hi, welcome to my portfolio! I'm Mangla Patidar, a Full Stack MERN Developer and AI Integration Specialist. Feel free to explore my work.";
     const utterance = new SpeechSynthesisUtterance(fullScript);
     
-    utterance.pitch = 1.35;
+    // Female voice pitch tuning
+    utterance.pitch = 1.45;
     utterance.rate = 0.95;
 
-    // Search for Female English Voice Engine
+    // Strict Female Voice Selection (Strictly excluding male voices)
     const voices = window.speechSynthesis.getVoices();
+    const maleKeywords = ['david', 'mark', 'george', 'james', 'richard', 'adam', 'alex', 'male', 'daniel', 'steve', 'guy', 'stefan', 'brian'];
     const femaleKeywords = [
       'female', 'zira', 'jenny', 'samantha', 'victoria', 'karen', 'veena',
-      'fiona', 'moira', 'google us english', 'google uk english female', 'siri'
+      'fiona', 'moira', 'google us english', 'google uk english female', 'siri', 'hazel', 'hedda'
     ];
 
     let femaleVoice = voices.find(v => {
       const name = v.name.toLowerCase();
-      return (v.lang.startsWith('en') || v.lang.startsWith('hi')) &&
-        femaleKeywords.some(kw => name.includes(kw));
+      const isMale = maleKeywords.some(m => name.includes(m));
+      const isFemale = femaleKeywords.some(kw => name.includes(kw));
+      return !isMale && (isFemale || v.lang.startsWith('en') || v.lang.startsWith('hi'));
     });
 
     if (!femaleVoice) {
-      femaleVoice = voices.find(v => v.lang.startsWith('en'));
+      femaleVoice = voices.find(v => {
+        const name = v.name.toLowerCase();
+        return !maleKeywords.some(m => name.includes(m));
+      });
     }
 
     if (femaleVoice) {
       utterance.voice = femaleVoice;
     }
 
-    // Dynamic Syllable Mouth Movement Sync
+    // Dynamic Syllable Amplitude Motion Sync
     let intervalId = null;
 
     utterance.onstart = () => {
       setIsSpeaking(true);
       intervalId = setInterval(() => {
-        // Generate dynamic amplitude lip movement sync
         setMouthOpening(Math.random() * 0.85 + 0.15);
-      }, 95);
+      }, 85);
     };
 
     utterance.onboundary = () => {
-      // Accentuate mouth opening on word boundary
-      setMouthOpening(0.95);
+      setMouthOpening(1.0);
     };
 
     const stopSpeech = () => {
@@ -286,6 +271,13 @@ const Hero = () => {
     utterance.onerror = stopSpeech;
 
     window.speechSynthesis.speak(utterance);
+  }, []);
+
+  // Ensure voices load asynchronously in browsers
+  useEffect(() => {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.onvoiceschanged = () => {};
+    }
   }, []);
 
   // Autoplay female greeting on site load / visitor gesture
@@ -304,7 +296,7 @@ const Hero = () => {
 
     const timer = setTimeout(() => {
       autoPlay();
-    }, 700);
+    }, 600);
 
     window.addEventListener('pointerdown', autoPlay);
     window.addEventListener('keydown', autoPlay);
@@ -399,7 +391,7 @@ const Hero = () => {
           </div>
         </motion.div>
 
-        {/* Right Interactive 3D Card Column with Dynamic SVG Lip-Sync Avatar */}
+        {/* Right Interactive 3D Card Column with Dynamic Speech Hologram Avatar */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
