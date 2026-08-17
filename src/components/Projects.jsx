@@ -11,7 +11,7 @@ const projects = [
     description: "A next-generation AI social media platform. Users receive intelligent AI-generated captions via Google Gemini API. Includes a full admin dashboard to manage users and moderate posts, powered by a secure JWT-authenticated, Cloudinary-backed image pipeline.",
     tech: ["React", "Vite", "Redux", "Node.js", "MongoDB", "Gemini API", "JWT", "Cloudinary"],
     github: "https://github.com/manglapatidar",
-    live: "#",
+    live: "https://imaginex-1-h2ln.onrender.com/",
     images: ["/imaginex-1.png", "/imaginex-2.png", "/imaginex-3.png"]
   },
   {

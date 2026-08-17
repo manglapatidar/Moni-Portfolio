@@ -70,7 +70,7 @@ export const projects = [
       "Cloudinary-based secure image upload pipeline"
     ],
     github: "https://github.com/manglapatidar",
-    live: "#",
+    live: "https://imaginex-1-h2ln.onrender.com/",
     image: "" // Placeholder to be handled in component
   },
   {
