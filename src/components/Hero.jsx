@@ -140,7 +140,7 @@ const TiltProfileCard = ({ isSpeaking, handlePlayVoice }) => {
               }`}
             >
               <Volume2 size={15} className={isSpeaking ? 'animate-bounce' : ''} />
-              <span>{isSpeaking ? 'FEMALE VOICE PLAYING' : 'HEAR FEMALE VOICE 🔊'}</span>
+              <span>{isSpeaking ? 'VOICE PLAYING 🔊' : 'WELCOME VOICE 🎙️'}</span>
             </button>
 
             {/* Audio Waveform */}
