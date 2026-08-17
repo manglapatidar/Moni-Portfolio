@@ -44,7 +44,7 @@ const MultiRoleTypewriter = () => {
   );
 };
 
-const TiltProfileCard = ({ isSpeaking, mouthOpening, handlePlayVoice }) => {
+const TiltProfileCard = ({ isSpeaking, handlePlayVoice }) => {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
@@ -77,14 +77,14 @@ const TiltProfileCard = ({ isSpeaking, mouthOpening, handlePlayVoice }) => {
             : 'border-[var(--color-cyan-accent)]/30 shadow-[0_0_50px_rgba(34,211,238,0.25)]'
         }`}
       >
-        {/* Ambient Glow */}
+        {/* Glow ambient layer */}
         <div className={`absolute inset-0 rounded-3xl bg-gradient-to-br transition-all duration-500 blur-xl ${
           isSpeaking
             ? 'from-pink-500/40 via-purple-400/30 to-[var(--color-cyan-accent)]/30 opacity-100'
             : 'from-[var(--color-cyan-accent)]/20 via-transparent to-[var(--color-violet-accent)]/20 opacity-60 group-hover:opacity-100'
         }`}></div>
 
-        {/* Floating Animated Speech Bubble */}
+        {/* Floating Speech Bubble */}
         <AnimatePresence>
           {isSpeaking && (
             <motion.div
@@ -103,34 +103,12 @@ const TiltProfileCard = ({ isSpeaking, mouthOpening, handlePlayVoice }) => {
         {/* Inner Card Frame */}
         <div className="relative w-full h-full rounded-2xl overflow-hidden bg-[#07090E] border border-white/10">
           
-          {/* Base Photo with Lip Sync Natural Motion */}
-          <motion.img
+          {/* Original Clean Profile Photo */}
+          <img
             src="/Monudii.png"
             alt="Mangla Patidar"
-            animate={isSpeaking ? {
-              scale: [1, 1.02 + mouthOpening * 0.02, 1, 1.015 + mouthOpening * 0.015, 1],
-              y: [0, -2 - mouthOpening * 2, 0, -1, 0]
-            } : { scale: 1, y: 0 }}
-            transition={isSpeaking ? { duration: 0.3, repeat: Infinity, ease: "easeInOut" } : { duration: 0.5 }}
             className="w-full h-full object-cover object-bottom filter contrast-[1.05] brightness-95 group-hover:scale-105 transition-transform duration-700"
           />
-
-          {/* Hologram / Soundwave Aura Halo when speaking */}
-          <AnimatePresence>
-            {isSpeaking && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 0.6 }}
-                exit={{ opacity: 0 }}
-                className="absolute inset-0 bg-radial from-pink-500/20 via-transparent to-transparent pointer-events-none z-20 flex items-center justify-center"
-              >
-                <div
-                  className="w-48 h-48 rounded-full border border-pink-400/50 shadow-[0_0_40px_rgba(244,114,182,0.4)] animate-ping"
-                  style={{ animationDuration: `${0.6 / Math.max(0.3, mouthOpening)}s` }}
-                ></div>
-              </motion.div>
-            )}
-          </AnimatePresence>
 
           {/* Laser Scanline */}
           <motion.div
@@ -162,7 +140,7 @@ const TiltProfileCard = ({ isSpeaking, mouthOpening, handlePlayVoice }) => {
               }`}
             >
               <Volume2 size={15} className={isSpeaking ? 'animate-bounce' : ''} />
-              <span>{isSpeaking ? 'VOICE GREETING ACTIVE' : 'HEAR FEMALE VOICE 🔊'}</span>
+              <span>{isSpeaking ? 'VOICE GREETING PLAYING' : 'HEAR FEMALE VOICE 🔊'}</span>
             </button>
 
             {/* Audio Waveform */}
@@ -170,7 +148,7 @@ const TiltProfileCard = ({ isSpeaking, mouthOpening, handlePlayVoice }) => {
               {[0, 1, 2, 3].map((i) => (
                 <motion.span
                   key={i}
-                  animate={isSpeaking ? { height: ['4px', `${12 + mouthOpening * 14}px`, '6px', '22px', '4px'] } : { height: '6px' }}
+                  animate={isSpeaking ? { height: ['4px', '20px', '6px', '24px', '4px'] } : { height: '6px' }}
                   transition={isSpeaking ? { duration: 0.25, repeat: Infinity, delay: i * 0.06 } : {}}
                   className={`w-1 rounded-full ${isSpeaking ? 'bg-pink-400' : 'bg-gray-600'}`}
                 />
@@ -207,7 +185,6 @@ const TiltProfileCard = ({ isSpeaking, mouthOpening, handlePlayVoice }) => {
 
 const Hero = () => {
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [mouthOpening, setMouthOpening] = useState(0);
 
   const handlePlayVoice = useCallback(() => {
     if (!('speechSynthesis' in window)) return;
@@ -217,11 +194,11 @@ const Hero = () => {
     const fullScript = "Hi, welcome to my portfolio! I'm Mangla Patidar, a Full Stack MERN Developer and AI Integration Specialist. Feel free to explore my work.";
     const utterance = new SpeechSynthesisUtterance(fullScript);
     
-    // Female voice pitch tuning
-    utterance.pitch = 1.45;
+    // High pitch for guaranteed clear female vocal frequency
+    utterance.pitch = 1.5;
     utterance.rate = 0.95;
 
-    // Strict Female Voice Selection (Strictly excluding male voices)
+    // Strict Female Voice Engine (Strictly excludes male voices)
     const voices = window.speechSynthesis.getVoices();
     const maleKeywords = ['david', 'mark', 'george', 'james', 'richard', 'adam', 'alex', 'male', 'daniel', 'steve', 'guy', 'stefan', 'brian'];
     const femaleKeywords = [
@@ -247,28 +224,9 @@ const Hero = () => {
       utterance.voice = femaleVoice;
     }
 
-    // Dynamic Syllable Amplitude Motion Sync
-    let intervalId = null;
-
-    utterance.onstart = () => {
-      setIsSpeaking(true);
-      intervalId = setInterval(() => {
-        setMouthOpening(Math.random() * 0.85 + 0.15);
-      }, 85);
-    };
-
-    utterance.onboundary = () => {
-      setMouthOpening(1.0);
-    };
-
-    const stopSpeech = () => {
-      setIsSpeaking(false);
-      setMouthOpening(0);
-      if (intervalId) clearInterval(intervalId);
-    };
-
-    utterance.onend = stopSpeech;
-    utterance.onerror = stopSpeech;
+    utterance.onstart = () => setIsSpeaking(true);
+    utterance.onend = () => setIsSpeaking(false);
+    utterance.onerror = () => setIsSpeaking(false);
 
     window.speechSynthesis.speak(utterance);
   }, []);
@@ -391,7 +349,7 @@ const Hero = () => {
           </div>
         </motion.div>
 
-        {/* Right Interactive 3D Card Column with Dynamic Speech Hologram Avatar */}
+        {/* Right Interactive 3D Card Column with Clean Profile Image */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -400,7 +358,6 @@ const Hero = () => {
         >
           <TiltProfileCard
             isSpeaking={isSpeaking}
-            mouthOpening={mouthOpening}
             handlePlayVoice={handlePlayVoice}
           />
         </motion.div>
