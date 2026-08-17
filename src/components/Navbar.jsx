@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Volume2, VolumeX, Sparkles, Terminal } from 'lucide-react';
+import { Menu, X, Volume2, VolumeX, Sparkles, Terminal, FileDown } from 'lucide-react';
 import { sound } from '../utils/SoundEngine';
 
 const navItems = [
@@ -129,6 +129,20 @@ const Navbar = () => {
             )}
           </button>
 
+          {/* Resume Download CTA */}
+          <a
+            href="/resume.pdf"
+            download="Mangla_Patidar_Resume.pdf"
+            target="_blank"
+            rel="noreferrer"
+            onMouseEnter={() => sound.playHover()}
+            onClick={() => sound.playClick()}
+            className="flex items-center space-x-1.5 px-4 py-2.5 rounded-xl border border-[var(--color-cyan-accent)]/40 bg-[var(--color-cyan-accent)]/10 text-[var(--color-cyan-accent)] text-xs font-bold font-mono uppercase tracking-wider hover:bg-[var(--color-cyan-accent)] hover:text-black transition-all interactive"
+          >
+            <FileDown size={14} />
+            <span>Resume</span>
+          </a>
+
           {/* Hire Me / Contact CTA */}
           <a
             href="#contact"
@@ -143,6 +157,17 @@ const Navbar = () => {
 
         {/* Mobile Controls & Hamburger */}
         <div className="flex md:hidden items-center space-x-3">
+          <a
+            href="/resume.pdf"
+            download="Mangla_Patidar_Resume.pdf"
+            target="_blank"
+            rel="noreferrer"
+            className="p-2 rounded-lg border border-[var(--color-cyan-accent)]/40 bg-[var(--color-cyan-accent)]/10 text-[var(--color-cyan-accent)] text-xs font-bold font-mono flex items-center space-x-1"
+          >
+            <FileDown size={14} />
+            <span>CV</span>
+          </a>
+
           <button
             onClick={toggleAudio}
             className="p-2 rounded-lg border border-white/10 bg-white/5 text-gray-300"
@@ -183,7 +208,17 @@ const Navbar = () => {
                   {item.name}
                 </a>
               ))}
-              <div className="pt-4 border-t border-white/10 flex justify-center">
+              <div className="pt-4 border-t border-white/10 flex flex-col space-y-3">
+                <a
+                  href="/resume.pdf"
+                  download="Mangla_Patidar_Resume.pdf"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-full text-center py-3 rounded-xl border border-[var(--color-cyan-accent)]/40 bg-[var(--color-cyan-accent)]/10 text-[var(--color-cyan-accent)] font-bold font-mono text-xs uppercase tracking-wider flex items-center justify-center space-x-2"
+                >
+                  <FileDown size={16} />
+                  <span>Download Resume PDF</span>
+                </a>
                 <a
                   href="#contact"
                   onClick={() => handleLinkClick('#contact')}

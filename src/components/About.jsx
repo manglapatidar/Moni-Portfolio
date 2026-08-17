@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { User, GraduationCap, Briefcase, Award, Sparkles, Terminal, Code, Cpu, ShieldCheck } from 'lucide-react';
+import { User, GraduationCap, Briefcase, Award, Sparkles, Terminal, Code, Cpu, ShieldCheck, FileDown } from 'lucide-react';
 import { sound } from '../utils/SoundEngine';
 
 const highlights = [
@@ -58,9 +58,24 @@ const About = () => {
             className="lg:col-span-7 glass-card rounded-3xl p-8 border border-white/10 flex flex-col justify-between"
           >
             <div>
-              <div className="flex items-center space-x-3 mb-6">
-                <Terminal size={20} className="text-[var(--color-cyan-accent)]" />
-                <h3 className="font-heading text-2xl font-bold text-white">Developer Story</h3>
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center space-x-3">
+                  <Terminal size={20} className="text-[var(--color-cyan-accent)]" />
+                  <h3 className="font-heading text-2xl font-bold text-white">Developer Story</h3>
+                </div>
+
+                <a
+                  href="/resume.pdf"
+                  download="Mangla_Patidar_Resume.pdf"
+                  target="_blank"
+                  rel="noreferrer"
+                  onMouseEnter={() => sound.playHover()}
+                  onClick={() => sound.playClick()}
+                  className="flex items-center space-x-1.5 px-4 py-2 rounded-xl border border-[var(--color-cyan-accent)]/40 bg-[var(--color-cyan-accent)]/10 text-[var(--color-cyan-accent)] font-mono text-xs font-bold uppercase tracking-wider hover:bg-[var(--color-cyan-accent)] hover:text-black transition-all interactive"
+                >
+                  <FileDown size={14} />
+                  <span>Resume PDF</span>
+                </a>
               </div>
 
               <p className="text-gray-300 text-base leading-relaxed mb-6 font-sans">

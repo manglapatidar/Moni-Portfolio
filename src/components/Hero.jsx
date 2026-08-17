@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, useMotionValue, useTransform, useSpring, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Terminal, Sparkles, Mic, Volume2 } from 'lucide-react';
+import { ArrowRight, Terminal, Sparkles, Mic, Volume2, FileDown } from 'lucide-react';
 import { FaReact } from 'react-icons/fa';
 import { sound } from '../utils/SoundEngine';
 
@@ -339,17 +339,30 @@ const Hero = () => {
               href="#projects"
               onMouseEnter={() => sound.playHover()}
               onClick={() => sound.playClick()}
-              className="group flex items-center space-x-3 bg-gradient-to-r from-[var(--color-cyan-accent)] via-[var(--color-blue-accent)] to-[var(--color-violet-accent)] text-black px-8 py-4 rounded-2xl font-bold font-mono text-sm tracking-wider uppercase shadow-[0_0_35px_rgba(34,211,238,0.4)] hover:shadow-[0_0_50px_rgba(129,140,248,0.7)] hover:scale-105 transition-all interactive"
+              className="group flex items-center space-x-3 bg-gradient-to-r from-[var(--color-cyan-accent)] via-[var(--color-blue-accent)] to-[var(--color-violet-accent)] text-black px-7 py-4 rounded-2xl font-bold font-mono text-xs sm:text-sm tracking-wider uppercase shadow-[0_0_35px_rgba(34,211,238,0.4)] hover:shadow-[0_0_50px_rgba(129,140,248,0.7)] hover:scale-105 transition-all interactive"
             >
               <span>Explore Projects</span>
               <ArrowRight size={18} className="group-hover:translate-x-1.5 transition-transform" />
             </a>
 
             <a
+              href="/resume.pdf"
+              download="Mangla_Patidar_Resume.pdf"
+              target="_blank"
+              rel="noreferrer"
+              onMouseEnter={() => sound.playHover()}
+              onClick={() => sound.playClick()}
+              className="flex items-center space-x-2 px-6 py-4 rounded-2xl border border-[var(--color-cyan-accent)]/40 bg-[var(--color-cyan-accent)]/10 text-[var(--color-cyan-accent)] font-mono text-xs sm:text-sm font-bold tracking-wider uppercase hover:bg-[var(--color-cyan-accent)] hover:text-black shadow-[0_0_20px_rgba(34,211,238,0.2)] transition-all interactive"
+            >
+              <FileDown size={18} />
+              <span>Resume / CV</span>
+            </a>
+
+            <a
               href="#contact"
               onMouseEnter={() => sound.playHover()}
               onClick={() => sound.playClick()}
-              className="flex items-center space-x-2 px-7 py-4 rounded-2xl border border-white/20 glass-panel hover:bg-white/10 text-white font-mono text-sm font-semibold tracking-wider uppercase hover:border-[var(--color-cyan-accent)] transition-all interactive"
+              className="flex items-center space-x-2 px-6 py-4 rounded-2xl border border-white/20 glass-panel hover:bg-white/10 text-white font-mono text-xs sm:text-sm font-semibold tracking-wider uppercase hover:border-[var(--color-cyan-accent)] transition-all interactive"
             >
               <span>Contact Me</span>
             </a>
